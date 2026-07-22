@@ -1,5 +1,10 @@
 node_modules/
 package-lock.json
 .cursor/
+.github/
+.idea/
+.vscode/
 *.log
 .DS_Store
+*.tmp
+_verify_*.txt

@@ -26,10 +26,10 @@
 主题 npm 包名为 `hexo-theme-cosolar`，站点侧主题名为 `cosolar`。
 
 ```bash
-# 在 Hexo 博客根目录（推荐从 GitHub 安装）
+# 在 Hexo 博客根目录
+npm install hexo-theme-cosolar
+# 或从 GitHub 安装
 npm install git+https://github.com/luoyuanxiang/hexo-theme-cosolar.git
-# 或 SSH
-npm install git+ssh://git@github.com:luoyuanxiang/hexo-theme-cosolar.git
 # 或本地路径
 npm install /path/to/hexo-theme-cosolar
 ```
@@ -47,6 +47,22 @@ npm update hexo-theme-cosolar
 ```
 
 > 推荐用站点根目录 `_config.cosolar.yml` 覆盖主题配置，避免直接改 `node_modules`。
+
+### 发布到 npm（维护者）
+
+仓库已配置 GitHub Actions：`.github/workflows/npm-publish.yml`，使用 Secret **`NPM_TOKENS`**。
+
+```bash
+# 手动触发
+gh workflow run "Publish to npm"
+
+# 或打版本标签后推送（自动发布）
+git tag v1.0.0
+git push origin v1.0.0
+
+# 或创建 GitHub Release 后自动发布
+gh release create v1.0.0 --generate-notes
+```
 
 ## 依赖插件
 

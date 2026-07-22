@@ -179,7 +179,8 @@ date: 2026-07-22
 ## 八、如何使用本主题（速查）
 
 ```bash
-npm install git+https://github.com/luoyuanxiang/hexo-theme-cosolar.git
+npm install hexo-theme-cosolar
+# 或：npm install git+https://github.com/luoyuanxiang/hexo-theme-cosolar.git
 npm install hexo-generator-search --save
 ```
 
