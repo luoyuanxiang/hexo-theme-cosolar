@@ -3,7 +3,8 @@
   var provider = comment.provider || 'none';
 %>
 <% if (provider && provider !== 'none') { %>
-<div id="comments" class="comments-section" style="margin-top: 24px">
+<div id="comments" class="comments-section comments-<%= provider %>">
+  <h3 class="comments-section-title">评论</h3>
   <% if (provider === 'twikoo') { %>
   <div id="tcomment"></div>
   <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js"></script>

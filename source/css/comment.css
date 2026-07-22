@@ -1,0 +1,363 @@
+/* ============================================
+   Cosolar — Twikoo / Waline 评论区主题适配
+   对齐青绿主色、圆角、卡片边框与明暗模式
+   ============================================ */
+
+.comments-section {
+  margin-top: 28px;
+  padding: 20px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.comments-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.comments-section-title::before {
+  content: "";
+  width: 4px;
+  height: 1.05em;
+  border-radius: var(--radius-full);
+  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+}
+
+/* ---------- Twikoo ---------- */
+#tcomment,
+.comments-twikoo .twikoo {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+#tcomment .tk-comments-title,
+.comments-twikoo .tk-comments-title {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text) !important;
+  margin-bottom: 14px !important;
+}
+
+#tcomment a,
+.comments-twikoo a {
+  color: var(--color-primary);
+}
+
+#tcomment a:hover,
+.comments-twikoo a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Avatar */
+#tcomment .tk-avatar,
+.comments-twikoo .tk-avatar {
+  border-radius: var(--radius-full) !important;
+  box-shadow: none !important;
+  background: var(--color-primary-bg) !important;
+  border: 1px solid var(--color-primary-border) !important;
+}
+
+#tcomment .tk-avatar .tk-avatar-img,
+.comments-twikoo .tk-avatar .tk-avatar-img {
+  border-radius: var(--radius-full) !important;
+}
+
+/* Submit card */
+#tcomment .tk-submit,
+.comments-twikoo .tk-submit {
+  margin-bottom: 8px;
+}
+
+/* Meta inputs (nick / mail / link) */
+#tcomment .tk-meta-input,
+.comments-twikoo .tk-meta-input {
+  margin-top: 12px !important;
+  gap: 10px !important;
+}
+
+#tcomment .tk-meta-input .el-input,
+.comments-twikoo .tk-meta-input .el-input {
+  font-size: 14px;
+}
+
+#tcomment .tk-meta-input .el-input-group__prepend,
+.comments-twikoo .tk-meta-input .el-input-group__prepend {
+  background: var(--color-primary-bg) !important;
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-right: none !important;
+  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
+  box-shadow: none !important;
+  font-weight: 500;
+}
+
+#tcomment .tk-meta-input .el-input__inner,
+.comments-twikoo .tk-meta-input .el-input__inner {
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+  box-shadow: none !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#tcomment .tk-meta-input .el-input__inner:focus,
+.comments-twikoo .tk-meta-input .el-input__inner:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent) !important;
+}
+
+#tcomment .tk-meta-input .el-input.is-active .el-input-group__prepend,
+.comments-twikoo .tk-meta-input .el-input.is-active .el-input-group__prepend {
+  border-color: var(--color-primary) !important;
+}
+
+/* Comment textarea */
+#tcomment .tk-input .el-textarea__inner,
+.comments-twikoo .tk-input .el-textarea__inner {
+  min-height: 140px !important;
+  padding: 14px 16px 36px !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: vertical;
+}
+
+#tcomment .tk-input .el-textarea__inner:focus,
+.comments-twikoo .tk-input .el-textarea__inner:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent) !important;
+  background: var(--color-card) !important;
+}
+
+#tcomment .tk-input .el-textarea__inner::placeholder,
+.comments-twikoo .tk-input .el-textarea__inner::placeholder {
+  color: var(--color-text-muted) !important;
+}
+
+#tcomment .tk-row.actions,
+.comments-twikoo .tk-row.actions {
+  margin-top: 10px !important;
+  margin-left: 0 !important;
+}
+
+/* Action icons */
+#tcomment .tk-action-icon,
+#tcomment .tk-icon,
+.comments-twikoo .tk-action-icon,
+.comments-twikoo .tk-icon {
+  color: var(--color-text-secondary) !important;
+  fill: currentColor !important;
+}
+
+#tcomment .tk-action-icon:hover,
+#tcomment .tk-icon:hover,
+.comments-twikoo .tk-action-icon:hover,
+.comments-twikoo .tk-icon:hover {
+  color: var(--color-primary) !important;
+}
+
+/* Buttons */
+#tcomment .tk-preview,
+#tcomment .tk-cancel,
+.comments-twikoo .tk-preview,
+.comments-twikoo .tk-cancel {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-card) !important;
+  color: var(--color-text-secondary) !important;
+  box-shadow: none !important;
+  height: 34px !important;
+  padding: 0 14px !important;
+  font-weight: 500 !important;
+  transition: all var(--transition) !important;
+}
+
+#tcomment .tk-preview:hover,
+#tcomment .tk-cancel:hover,
+.comments-twikoo .tk-preview:hover,
+.comments-twikoo .tk-cancel:hover {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  background: var(--color-primary-bg) !important;
+}
+
+#tcomment .tk-submit .el-button--primary,
+#tcomment .tk-send,
+.comments-twikoo .tk-submit .el-button--primary,
+.comments-twikoo .tk-send {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--color-primary) !important;
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 28%, transparent) !important;
+  height: 34px !important;
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  transition: all var(--transition) !important;
+}
+
+#tcomment .tk-submit .el-button--primary:hover,
+#tcomment .tk-send:hover,
+.comments-twikoo .tk-submit .el-button--primary:hover,
+.comments-twikoo .tk-send:hover {
+  background: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+  color: #fff !important;
+}
+
+#tcomment .tk-submit .el-button--primary:focus,
+#tcomment .tk-send:focus,
+.comments-twikoo .tk-submit .el-button--primary:focus,
+.comments-twikoo .tk-send:focus {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+#tcomment .el-button.is-disabled,
+#tcomment .el-button.is-disabled:hover,
+.comments-twikoo .el-button.is-disabled,
+.comments-twikoo .el-button.is-disabled:hover {
+  background: var(--color-border-light) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-muted) !important;
+  box-shadow: none !important;
+}
+
+/* Comment list items */
+#tcomment .tk-comments-container > .tk-comment,
+.comments-twikoo .tk-comments-container > .tk-comment {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+#tcomment .tk-comments-container > .tk-comment:last-child,
+.comments-twikoo .tk-comments-container > .tk-comment:last-child {
+  border-bottom: none;
+}
+
+#tcomment .tk-nick,
+.comments-twikoo .tk-nick {
+  color: var(--color-text) !important;
+  font-weight: 600 !important;
+}
+
+#tcomment .tk-time,
+#tcomment .tk-extras,
+.comments-twikoo .tk-time,
+.comments-twikoo .tk-extras {
+  color: var(--color-text-muted) !important;
+}
+
+#tcomment .tk-content,
+.comments-twikoo .tk-content {
+  color: var(--color-text) !important;
+  line-height: 1.75 !important;
+}
+
+#tcomment .tk-content pre,
+.comments-twikoo .tk-content pre {
+  background: var(--color-bg) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+#tcomment .tk-tag,
+.comments-twikoo .tk-tag {
+  border-radius: var(--radius-full) !important;
+}
+
+#tcomment .tk-tag-green,
+.comments-twikoo .tk-tag-green {
+  background: var(--color-primary-bg) !important;
+  border: 1px solid var(--color-primary-border) !important;
+  color: var(--color-primary) !important;
+}
+
+#tcomment .tk-expand,
+.comments-twikoo .tk-expand {
+  border: 1px dashed var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  background: transparent !important;
+  color: var(--color-text-secondary) !important;
+}
+
+#tcomment .tk-expand:hover,
+.comments-twikoo .tk-expand:hover {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  background: var(--color-primary-bg) !important;
+}
+
+/* Admin / emoji popovers */
+#tcomment .el-button--text,
+.comments-twikoo .el-button--text {
+  color: var(--color-text-secondary) !important;
+}
+
+#tcomment .el-button--text:hover,
+.comments-twikoo .el-button--text:hover {
+  color: var(--color-primary) !important;
+}
+
+#tcomment .tk-admin-config,
+.comments-twikoo .tk-admin-config,
+#tcomment .el-dialog,
+.comments-twikoo .el-dialog {
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+/* ---------- Waline (light theme alignment) ---------- */
+.comments-waline #waline {
+  --waline-theme-color: var(--color-primary);
+  --waline-active-color: var(--color-primary-hover);
+  --waline-color: var(--color-text);
+  --waline-bgcolor: var(--color-card);
+  --waline-bgcolor-light: var(--color-bg);
+  --waline-border-color: var(--color-border);
+  --waline-disable-bgcolor: var(--color-border-light);
+  --waline-disable-color: var(--color-text-muted);
+  --waline-bq-color: var(--color-text-muted);
+  --waline-info-bgcolor: var(--color-bg);
+  --waline-info-color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+}
+
+.comments-waline .wl-btn.primary {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.comments-waline .wl-panel,
+.comments-waline .wl-editor {
+  border-radius: var(--radius-md) !important;
+  border-color: var(--color-border) !important;
+}
+
+@media (max-width: 640px) {
+  .comments-section {
+    padding: 16px;
+  }
+
+  #tcomment .tk-meta-input,
+  .comments-twikoo .tk-meta-input {
+    flex-direction: column !important;
+  }
+}

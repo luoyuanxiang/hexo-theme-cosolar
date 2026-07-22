@@ -18,6 +18,9 @@
 <% if (theme.search && theme.search.enable) { %>
 <link rel="stylesheet" href="<%- url_for('/css/search.css') %>" />
 <% } %>
+<% if (theme.comment && theme.comment.provider && theme.comment.provider !== 'none') { %>
+<link rel="stylesheet" href="<%- url_for('/css/comment.css') %>" />
+<% } %>
 
 <% if (style.icon_css_url) { %>
 <link rel="stylesheet" href="<%= style.icon_css_url %>" />
