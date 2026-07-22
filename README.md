@@ -85,6 +85,8 @@ gh release create v1.0.0 --generate-notes
 
 ```bash
 npm install hexo-generator-search --save
+# 可选：官方订阅插件（安装后主题内置 atom 生成器会自动让位）
+# npm install hexo-generator-feed --save
 ```
 
 博客 `_config.yml` 示例：
@@ -97,7 +99,7 @@ search:
   format: json
 ```
 
-主题 `search.path` 须与上述 `path` 一致（默认 `search.json`）。
+主题默认生成 **`/atom.xml`**（`feed.enable: true`），页脚 / 侧栏 RSS 图标指向该地址。也可在 `social.rss` 填写自定义订阅 URL。
 
 ## 配置入口
 
@@ -120,7 +122,9 @@ Hexo 扩展：
 - `menu` — 导航（含 icon，支持 `children` 多级菜单）
 - `search` — 本地搜索
 - `comment` — `twikoo` / `waline` / `none`
+- `feed` — 内置 `/atom.xml`（已装 `hexo-generator-feed` 时自动让位）
 - `busuanzi` — 访问量
+- `visit` — 文章阅读量（首页卡片回填）
 - `upvote` — `local` / `leancloud`
 - `code` — Mac 代码块 / 折叠高度
 

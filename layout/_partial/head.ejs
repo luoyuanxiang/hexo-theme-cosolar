@@ -10,6 +10,14 @@
 <title><%= pageTitle %></title>
 <% if (config.description) { %><meta name="description" content="<%= config.description %>" /><% } %>
 <link rel="icon" type="image/png" href="<%= theme.favicon || config.favicon || url_for('/images/favicon.png') %>" />
+<% if (!(theme.feed && theme.feed.enable === false) || (theme.social && theme.social.rss)) { %>
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  title="<%= config.title %>"
+  href="<%= (theme.social && theme.social.rss) || url_for('/' + ((theme.feed && theme.feed.path) || 'atom.xml')) %>"
+/>
+<% } %>
 
 <link rel="stylesheet" href="<%- url_for('/css/main.css') %>" />
 <% if (theme.code && theme.code.enable !== false) { %>
