@@ -1,0 +1,77 @@
+<%
+  var archiveCfg = theme.archive || {};
+  var defaultCover = url_for('/images/featured-default.png');
+  var cover = archiveCfg.archives_cover || defaultCover;
+  var posts = site.posts.sort('-date');
+  var total = site.posts.length;
+
+  // Group by year -> month
+  var groups = {};
+  posts.each(function(post) {
+    var y = date(post.date, 'YYYY');
+    var m = date(post.date, 'M');
+    if (!groups[y]) groups[y] = {};
+    if (!groups[y][m]) groups[y][m] = [];
+    groups[y][m].push(post);
+  });
+  var years = Object.keys(groups).sort(function(a, b) { return Number(b) - Number(a); });
+%>
+<div class="layout-grid no-sidebar">
+  <div class="content-area">
+    <section class="page-hero">
+      <% if (cover) { %>
+      <div class="page-hero-bg">
+        <img src="<%= cover %>" alt="" loading="lazy" />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <% } else { %>
+      <div class="page-hero-bg--fallback"></div>
+      <% } %>
+      <div class="page-hero-inner">
+        <span class="page-hero-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+          </svg>
+          <span>归档</span>
+        </span>
+        <h1>文章归档</h1>
+        <p class="page-hero-desc">共 <span><%= total %></span> 篇文章，按时间归档</p>
+      </div>
+    </section>
+
+    <% if (years.length) { %>
+      <% years.forEach(function(year) {
+           var months = Object.keys(groups[year]).sort(function(a, b) { return Number(b) - Number(a); });
+      %>
+      <div class="archive-timeline">
+        <div class="archive-year-dot"></div>
+        <div class="archive-year-label"><%= year %></div>
+        <% months.forEach(function(month) { %>
+        <div class="archive-month-group">
+          <div class="archive-month-dot"></div>
+          <div class="archive-month-label"><%= month %> 月</div>
+          <ul class="archive-post-list">
+            <% groups[year][month].forEach(function(post) { %>
+            <li>
+              <span class="archive-post-date"><%= date(post.date, 'MM-DD') %></span>
+              <a class="archive-post-title" href="<%- url_for(post.path) %>"><%= post.title %></a>
+            </li>
+            <% }); %>
+          </ul>
+        </div>
+        <% }); %>
+      </div>
+      <% }); %>
+    <% } else { %>
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+      </svg>
+      <p>暂无文章归档</p>
+    </div>
+    <% } %>
+
+    <%- partial('_partial/pagination') %>
+  </div>
+</div>

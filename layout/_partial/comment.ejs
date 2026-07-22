@@ -1,0 +1,39 @@
+<%
+  var comment = theme.comment || {};
+  var provider = comment.provider || 'none';
+%>
+<% if (provider && provider !== 'none') { %>
+<div id="comments" class="comments-section" style="margin-top: 24px">
+  <% if (provider === 'twikoo') { %>
+  <div id="tcomment"></div>
+  <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js"></script>
+  <script>
+    twikoo.init({
+      envId: '<%= (comment.twikoo && comment.twikoo.envId) || '' %>',
+      el: '#tcomment',
+      region: '<%= (comment.twikoo && comment.twikoo.region) || '' %>',
+      path: location.pathname
+    });
+  </script>
+  <% } else if (provider === 'waline') { %>
+  <% var waline = comment.waline || {}; %>
+  <div id="waline"></div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@3/dist/waline.css" />
+  <script type="module">
+    import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: '<%= waline.serverURL || '' %>',
+      lang: '<%= waline.lang || 'zh-CN' %>',
+      reaction: <%= !!waline.reaction %>,
+      meta: <%- JSON.stringify(waline.meta || ['nick','mail','link']) %>,
+      requiredMeta: <%- JSON.stringify(waline.requiredMeta || ['nick','mail']) %>,
+      pageSize: <%= waline.pageSize || 10 %>,
+      dark: <%- JSON.stringify(waline.dark != null ? waline.dark : 'auto') %>,
+      pageview: <%= !!waline.pageview %>,
+      placeholder: '<%= waline.placeholder || '说点什么吧…' %>'
+    });
+  </script>
+  <% } %>
+</div>
+<% } %>

@@ -1,0 +1,159 @@
+/* Cosolar local search modal — teal / glass aesthetic */
+
+.search-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 16px 24px;
+  background: color-mix(in srgb, var(--color-dark, #0f172a) 45%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.search-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.search-modal {
+  width: min(640px, 100%);
+  max-height: min(70vh, 560px);
+  display: flex;
+  flex-direction: column;
+  background: color-mix(in srgb, var(--color-card, #ffffff) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary, #10b981) 28%, var(--color-border, #e2e8f0));
+  border-radius: 16px;
+  box-shadow:
+    0 24px 48px rgba(15, 23, 42, 0.18),
+    0 0 0 1px color-mix(in srgb, var(--color-primary, #10b981) 12%, transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  overflow: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transition: transform 0.2s ease;
+}
+
+.search-modal-overlay.is-open .search-modal {
+  transform: translateY(0) scale(1);
+}
+
+.search-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border, #e2e8f0) 70%, transparent);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text, #1e293b);
+  font-size: 1.05rem;
+  line-height: 1.4;
+  padding: 4px 0;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.search-modal-kbd {
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 6px;
+  color: var(--color-text-secondary, #64748b);
+  background: color-mix(in srgb, var(--color-primary, #10b981) 10%, var(--color-bg, #f8fafc));
+  border: 1px solid color-mix(in srgb, var(--color-border, #e2e8f0) 80%, transparent);
+}
+
+.search-modal-status {
+  min-height: 1.25em;
+  padding: 8px 16px 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.search-result-item {
+  margin: 0;
+}
+
+.search-result-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.search-result-link:hover,
+.search-result-link:focus-visible {
+  background: color-mix(in srgb, var(--color-primary, #10b981) 12%, transparent);
+  outline: none;
+}
+
+.search-result-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text, #1e293b);
+}
+
+.search-result-snippet {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.search-result-title mark,
+.search-result-snippet mark {
+  background: color-mix(in srgb, var(--color-primary, #10b981) 28%, transparent);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.search-result-empty {
+  padding: 24px 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+body.search-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .search-modal-overlay {
+    padding: 8vh 12px 16px;
+  }
+
+  .search-modal {
+    max-height: 80vh;
+    border-radius: 14px;
+  }
+}

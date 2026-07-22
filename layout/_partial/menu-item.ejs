@@ -1,0 +1,38 @@
+<%#
+  Recursive menu item.
+  Locals: item, depth (number), iconPrefix (string)
+%>
+<%
+  var depth = typeof depth === 'number' ? depth : 0;
+  var children = (item && (item.children || item.submenu)) || [];
+  var hasChildren = Array.isArray(children) && children.length > 0;
+  var href = menu_url(item.url);
+  var active = menu_is_active(item);
+  var external = item.url && /^(https?:|\/\/)/i.test(String(item.url));
+  var target = item.target || (external ? '_blank' : '');
+  var rel = target === '_blank' ? 'noopener noreferrer' : '';
+%>
+<div class="nav-item<%= hasChildren ? ' has-children' : '' %><%= active ? ' is-active' : '' %>" data-depth="<%= depth %>">
+  <a
+    class="nav-link<%= active ? ' active' : '' %>"
+    href="<%= href %>"
+    <% if (target) { %>target="<%= target %>"<% } %>
+    <% if (rel) { %>rel="<%= rel %>"<% } %>
+    <% if (hasChildren) { %>aria-haspopup="true" aria-expanded="false"<% } %>
+  >
+    <% if (item.icon) { %><i class="<%= iconPrefix %> <%= item.icon %>"></i><% } %>
+    <span><%= item.name %></span>
+    <% if (hasChildren) { %>
+    <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+    <% } %>
+  </a>
+  <% if (hasChildren) { %>
+  <div class="nav-dropdown" role="menu">
+    <% children.forEach(function(child) { %>
+      <%- partial('_partial/menu-item', { item: child, depth: depth + 1, iconPrefix: iconPrefix }) %>
+    <% }); %>
+  </div>
+  <% } %>
+</div>

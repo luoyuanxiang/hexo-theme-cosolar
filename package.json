@@ -1,0 +1,19 @@
+{
+  "name": "hexo-theme-cosolar",
+  "version": "1.0.0",
+  "description": "清风徐来，码迹自留 — Cosolar Hexo theme (ported from Halo)",
+  "main": "package.json",
+  "keywords": ["hexo", "theme", "cosolar"],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/luoyuanxiang/hexo-theme-cosolar",
+  "bugs": {
+    "url": "https://github.com/luoyuanxiang/hexo-theme-cosolar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoyuanxiang/hexo-theme-cosolar.git"
+  },
+  "engines": {
+    "hexo": ">=6.0.0"
+  }
+}

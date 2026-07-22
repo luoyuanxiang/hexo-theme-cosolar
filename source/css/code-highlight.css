@@ -1,0 +1,331 @@
+/* ============================================================
+ * Cosolar Mac-style code blocks
+ * Theme-aware (light/dark) + primary color accents
+ * ============================================================ */
+
+:root {
+  --code-mac-bg: #f6f8fa;
+  --code-mac-header: #eef1f4;
+  --code-mac-border: color-mix(in srgb, var(--color-primary, #10b981) 18%, var(--color-border, #e5e7eb));
+  --code-mac-text: #24292f;
+  --code-mac-muted: #6b7280;
+  --code-token-comment: #6a737d;
+  --code-token-keyword: #d73a49;
+  --code-token-string: #032f62;
+  --code-token-number: #005cc5;
+  --code-token-built: color-mix(in srgb, var(--color-primary, #10b981) 85%, #0f766e);
+  --code-token-title: #6f42c1;
+  --code-token-attr: #e36209;
+  --code-token-literal: #005cc5;
+  --code-token-meta: #735c0f;
+  --code-gutter: #9ca3af;
+  --code-fold-height: 320px;
+}
+
+[data-theme="dark"] {
+  --code-mac-bg: #0d1117;
+  --code-mac-header: #161b22;
+  --code-mac-border: color-mix(in srgb, var(--color-primary, #10b981) 28%, #30363d);
+  --code-mac-text: #e6edf3;
+  --code-mac-muted: #8b949e;
+  --code-token-comment: #8b949e;
+  --code-token-keyword: #ff7b72;
+  --code-token-string: #a5d6ff;
+  --code-token-number: #79c0ff;
+  --code-token-built: color-mix(in srgb, var(--color-primary, #10b981) 70%, #7ee787);
+  --code-token-title: #d2a8ff;
+  --code-token-attr: #ffa657;
+  --code-token-literal: #79c0ff;
+  --code-token-meta: #d2a8ff;
+  --code-gutter: #6e7681;
+}
+
+.mac-code-block {
+  margin: 1.25em 0;
+  border: 1px solid var(--code-mac-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--code-mac-bg);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-primary, #10b981) 8%, transparent),
+    0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="dark"] .mac-code-block {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.mac-code-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 0 14px;
+  background: var(--code-mac-header);
+  border-bottom: 1px solid var(--code-mac-border);
+  user-select: none;
+}
+
+.mac-code-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.mac-code-dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mac-code-dots .dot-red {
+  background: #ff5f57;
+}
+.mac-code-dots .dot-yellow {
+  background: #febc2e;
+}
+.mac-code-dots .dot-green {
+  background: #28c840;
+}
+
+.mac-code-lang {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 12px;
+  color: var(--code-mac-muted);
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mac-code-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mac-code-copy {
+  appearance: none;
+  border: 1px solid var(--code-mac-border);
+  background: color-mix(in srgb, var(--color-primary, #10b981) 10%, transparent);
+  color: var(--color-primary, #10b981);
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.mac-code-copy:hover {
+  background: color-mix(in srgb, var(--color-primary, #10b981) 18%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary, #10b981) 40%, var(--code-mac-border));
+}
+
+.mac-code-copy.is-copied {
+  color: #fff;
+  background: var(--color-primary, #10b981);
+  border-color: var(--color-primary, #10b981);
+}
+
+.mac-code-body {
+  position: relative;
+  max-height: none;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mac-code-block.is-foldable .mac-code-body {
+  max-height: var(--code-fold-height, 320px);
+}
+
+.mac-code-block.is-foldable:not(.is-expanded) .mac-code-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--code-mac-bg));
+}
+
+.mac-code-block.is-expanded .mac-code-body {
+  max-height: none;
+}
+
+.mac-code-block.is-expanded .mac-code-body::after {
+  display: none;
+}
+
+.mac-code-fold {
+  display: none;
+  width: 100%;
+  appearance: none;
+  border: 0;
+  border-top: 1px solid var(--code-mac-border);
+  background: var(--code-mac-header);
+  color: var(--color-primary, #10b981);
+  font-size: 13px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mac-code-block.is-foldable .mac-code-fold {
+  display: block;
+}
+
+.mac-code-fold:hover {
+  background: color-mix(in srgb, var(--color-primary, #10b981) 12%, var(--code-mac-header));
+}
+
+/* Reset nested figure/pre inside Mac shell */
+.mac-code-body figure.highlight,
+.mac-code-body pre {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.mac-code-body figure.highlight {
+  overflow: visible;
+}
+
+.mac-code-body .highlight table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  display: table;
+}
+
+.mac-code-body .highlight td {
+  border: 0;
+  padding: 0;
+}
+
+.mac-code-body .highlight .gutter {
+  width: 1%;
+  padding: 14px 10px 14px 14px;
+  text-align: right;
+  color: var(--code-gutter);
+  user-select: none;
+  border-right: 1px solid var(--code-mac-border);
+  vertical-align: top;
+}
+
+.mac-code-body .highlight .gutter pre {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.mac-code-body .highlight .code {
+  padding: 0;
+  vertical-align: top;
+}
+
+.mac-code-body .highlight .code pre,
+.mac-code-body > pre,
+.mac-code-body pre {
+  padding: 14px 16px;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+  color: var(--code-mac-text);
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.875em;
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.mac-code-body .highlight .code pre code,
+.mac-code-body pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+/* Inline code stays theme primary */
+.prose :not(pre) > code {
+  color: var(--color-primary, #10b981);
+}
+
+/* Token colors (Hexo highlight / highlight.js style classes) */
+.mac-code-body .comment,
+.mac-code-body .quote {
+  color: var(--code-token-comment);
+  font-style: italic;
+}
+
+.mac-code-body .keyword,
+.mac-code-body .selector-tag,
+.mac-code-body .addition {
+  color: var(--code-token-keyword);
+}
+
+.mac-code-body .string,
+.mac-code-body .meta .string,
+.mac-code-body .doctag {
+  color: var(--code-token-string);
+}
+
+.mac-code-body .number,
+.mac-code-body .literal,
+.mac-code-body .regexp {
+  color: var(--code-token-number);
+}
+
+.mac-code-body .built_in,
+.mac-code-body .type,
+.mac-code-body .params {
+  color: var(--code-token-built);
+}
+
+.mac-code-body .title,
+.mac-code-body .section,
+.mac-code-body .name,
+.mac-code-body .selector-id,
+.mac-code-body .selector-class {
+  color: var(--code-token-title);
+}
+
+.mac-code-body .attribute,
+.mac-code-body .attr,
+.mac-code-body .variable,
+.mac-code-body .template-variable,
+.mac-code-body .class .title {
+  color: var(--code-token-attr);
+}
+
+.mac-code-body .meta,
+.mac-code-body .meta-keyword {
+  color: var(--code-token-meta);
+}
+
+.mac-code-body .deletion {
+  color: #f85149;
+}
+
+/* Fallback: bare pre in prose before JS wraps */
+.prose > figure.highlight,
+.prose > pre {
+  border: 1px solid var(--code-mac-border);
+  border-radius: 12px;
+  background: var(--code-mac-bg);
+  color: var(--code-mac-text);
+}

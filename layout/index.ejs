@@ -1,0 +1,65 @@
+<%
+  var showSidebar = !(theme.sidebar && theme.sidebar.show_sidebar === false);
+  var loadMode = (theme.featured && theme.featured.home_load_mode) || 'pagination';
+  var posts = page.posts;
+%>
+<div class="layout-grid<%= showSidebar ? '' : ' no-sidebar' %>">
+  <div class="content-area" data-load-mode="<%= loadMode %>">
+    <%- partial('_partial/featured') %>
+
+    <div class="section-header">
+      <h2 class="section-title">最新文章</h2>
+      <div class="section-header-actions">
+        <div class="filter-tabs" role="tablist" aria-label="文章排序">
+          <button type="button" class="filter-tab active" data-sort="latest" role="tab" aria-selected="true">最新</button>
+          <button type="button" class="filter-tab" data-sort="hot" role="tab" aria-selected="false">最热</button>
+          <button type="button" class="filter-tab" data-sort="recommend" role="tab" aria-selected="false">推荐</button>
+        </div>
+        <div class="view-toggle" title="切换视图">
+          <button class="view-toggle-btn active" data-view="list" aria-label="列表视图">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>
+          </button>
+          <button class="view-toggle-btn" data-view="grid" aria-label="卡片视图">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <% if (posts && posts.length) { %>
+    <div class="article-list">
+      <% posts.each(function(post) { %>
+        <%- partial('_partial/post-card', { post: post }) %>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+      </svg>
+      <p>暂无文章，敬请期待</p>
+    </div>
+    <% } %>
+
+    <%- partial('_partial/pagination') %>
+  </div>
+
+  <% if (showSidebar) { %>
+    <%- partial('_partial/sidebar') %>
+  <% } %>
+</div>
+
+<script src="<%- url_for('/js/index.js') %>" defer></script>

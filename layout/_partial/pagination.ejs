@@ -1,0 +1,47 @@
+<%
+  var current = page.current || 1;
+  var total = page.total || 1;
+  var prev = page.prev;
+  var next = page.next;
+  var prevUrl = page.prev_link ? url_for(page.prev_link) : (prev ? page_url(prev) : '');
+  var nextUrl = page.next_link ? url_for(page.next_link) : (next ? page_url(next) : '');
+  var firstUrl = page_url(1);
+  var lastUrl = page_url(total);
+%>
+<% if (total > 1) { %>
+<nav
+  class="pagination"
+  data-current="<%= current %>"
+  data-total="<%= total %>"
+  data-prev-url="<%= prevUrl %>"
+  data-next-url="<%= nextUrl %>"
+  data-base="<%= page.base || '/' %>"
+>
+  <% if (prev) { %>
+  <a class="page-first" href="<%= firstUrl %>" aria-label="首页">
+    <span class="page-arrow">«</span><span class="page-label">首页</span>
+  </a>
+  <a class="page-prev" href="<%= prevUrl %>" aria-label="上一页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="15 18 9 12 15 6"/></svg>
+  </a>
+  <% } %>
+
+  <span class="page-num is-current"><%= current %></span>
+
+  <% if (next) { %>
+  <a class="page-next" href="<%= nextUrl %>" aria-label="下一页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a class="page-last" href="<%= lastUrl %>" aria-label="末页">
+    <span class="page-label">末页</span><span class="page-arrow">»</span>
+  </a>
+  <% } %>
+
+  <form class="pagination-jump" aria-label="跳转页码" data-total="<%= total %>" data-base="<%= page.base || '/' %>">
+    <span class="jump-text">跳至</span>
+    <input type="number" class="jump-input" min="1" max="<%= total %>" placeholder="页码" />
+    <span class="jump-text">页</span>
+    <button type="submit" class="jump-btn" aria-label="跳转">Go</button>
+  </form>
+</nav>
+<% } %>

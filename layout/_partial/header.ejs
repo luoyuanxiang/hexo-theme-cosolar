@@ -1,0 +1,89 @@
+<%
+  var basic = theme.basic || {};
+  var style = theme.style || {};
+  var iconPrefix = style.icon_prefix || 'iconfont';
+  var menu = theme.menu || [];
+  var searchEnabled = theme.search && theme.search.enable;
+  var searchPlaceholder = (theme.search && theme.search.placeholder) || '搜索文章';
+%>
+<header class="site-header">
+  <div class="header-inner container">
+    <a class="header-logo" href="<%- url_for('/') %>">
+      <% var headerLogo = basic.logo_image || url_for('/images/logo.png'); %>
+      <img
+        class="logo-image"
+        src="<%= headerLogo %>"
+        width="<%= basic.logo_image_width || 36 %>"
+        height="<%= basic.logo_image_height || 36 %>"
+        alt="<%= basic.logo_text || config.title || 'Logo' %>"
+      />
+      <span class="logo-text">
+        <span class="logo-name"><%= basic.logo_text || config.title %></span>
+        <span class="logo-tagline"><%= basic.tagline || config.subtitle || '' %></span>
+      </span>
+    </a>
+
+    <nav class="header-nav" id="headerNav">
+      <% if (menu.length) { %>
+        <% menu.forEach(function(item) { %>
+          <%- partial('_partial/menu-item', { item: item, depth: 0, iconPrefix: iconPrefix }) %>
+        <% }); %>
+      <% } else { %>
+        <div class="nav-item">
+          <a class="nav-link" href="<%- url_for('/') %>"><i class="iconfont icon-shouye"></i><span>首页</span></a>
+        </div>
+        <div class="nav-item">
+          <a class="nav-link" href="<%- url_for('/categories/') %>"><i class="iconfont icon-fengfuduoyuan"></i><span>分类</span></a>
+        </div>
+        <div class="nav-item">
+          <a class="nav-link" href="<%- url_for('/tags/') %>"><i class="iconfont icon-bokexinwen"></i><span>标签</span></a>
+        </div>
+        <div class="nav-item">
+          <a class="nav-link" href="<%- url_for('/archives/') %>"><i class="iconfont icon-jishufuwu"></i><span>归档</span></a>
+        </div>
+      <% } %>
+    </nav>
+
+    <div class="header-actions">
+      <% if (searchEnabled) { %>
+      <div class="search-box" data-search-open onclick="if(window.CosolarSearch){CosolarSearch.open();}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <span class="search-placeholder"><%= searchPlaceholder %></span>
+        <span class="search-kbd">Ctrl K</span>
+      </div>
+      <% } else { %>
+      <a class="search-box" href="<%- url_for('/archives/') %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <span class="search-placeholder"><%= searchPlaceholder %></span>
+      </a>
+      <% } %>
+
+      <button class="icon-btn" id="themeToggle" aria-label="切换主题">
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      </button>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

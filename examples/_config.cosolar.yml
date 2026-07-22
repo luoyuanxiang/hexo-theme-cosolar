@@ -1,0 +1,109 @@
+# 复制到 Hexo 博客根目录为 _config.cosolar.yml（覆盖主题默认配置）
+# 完整字段与中文注释见主题包内 _config.yml
+
+# favicon: /images/favicon.png   # 默认已内置，可改成自己的图标 URL
+
+basic:
+  # logo_image: /images/logo.png  # 默认已内置墨韵图标，可覆盖
+  logo_text: 墨韵云阁
+  tagline: 记录技术成长，分享解决方案
+  footer_text: "&copy; 2026 墨韵云阁"
+  icp: ""
+
+style:
+  primary_color: "#10B981"
+  color_scheme: auto # auto | light | dark
+  content_width: 1600
+  default_post_cover: ""
+
+social:
+  # author_avatar: /images/logo.png  # 默认已内置，可覆盖
+  author_name: 墨韵云阁
+  author_bio: 热爱技术，乐于分享
+  author_location: 中国
+  author_join_date: "2024-01-01"
+  github: ""
+  email: ""
+
+featured:
+  show_featured: true
+  autoplay: true
+  interval: 5000
+  featured_max_count: 5
+  fallback: latest # latest | pinned | none
+  # 精选文章：填写文章 path / slug / 标题
+  featured_posts: []
+  # Hexo 移植版仅实现分页；scroll 暂不生效
+  home_load_mode: pagination
+
+sidebar:
+  show_sidebar: true
+  show_author: true
+  show_announcement: true
+  announcement_content: "欢迎来到我的博客 👋"
+  show_tag_cloud: true
+  show_categories: true
+  show_recent: true
+  show_sidebar_links: true
+  show_sidebar_feeds: false
+
+background_light:
+  bg_type: none # none | image | dynamic
+
+background_dark:
+  bg_type: none
+
+menu:
+  - name: 首页
+    url: /
+    icon: icon-shouye
+  - name: 分类
+    url: /categories/
+    icon: icon-fengfuduoyuan
+    # 多级示例（按需取消注释）:
+    # children:
+    #   - name: 开发笔记
+    #     url: /categories/开发笔记/
+    #   - name: 外部文档
+    #     url: https://hexo.io
+    #     target: _blank
+  - name: 标签
+    url: /tags/
+    icon: icon-bokexinwen
+  - name: 归档
+    url: /archives/
+    icon: icon-jishufuwu
+  - name: 友链
+    url: /links/
+    icon: icon-kaiyuan
+  - name: 关于
+    url: /about/
+    icon: icon-blog
+
+search:
+  enable: true
+  path: search.json
+  placeholder: 搜索文章
+
+comment:
+  provider: none # none | twikoo | waline
+  twikoo:
+    envId: ""
+    region: ""
+  waline:
+    serverURL: ""
+
+busuanzi:
+  enable: true
+
+upvote:
+  enable: true
+  provider: local # local | leancloud
+
+code:
+  enable: true
+  style: mac
+  fold: true
+  # 折叠高度（像素），超过后显示「展开代码」
+  fold_height: 320
+  copy: true

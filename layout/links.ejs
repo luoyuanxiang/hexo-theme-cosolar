@@ -1,0 +1,231 @@
+<%
+  var linksCfg = theme.links || {};
+  var linksTitle = linksCfg.links_title || '友情链接';
+  var linksSubtitle = linksCfg.links_subtitle || '与优秀的开发者们互相学习，共同进步，以下是我精心挑选的技术伙伴们';
+  var defaultCover = url_for('/images/featured-default.png');
+  var cover = linksCfg.links_cover || defaultCover;
+  var grouped = links_grouped();
+  var groups = grouped.groups || [];
+  var totalLinks = grouped.total || 0;
+  var totalGroups = groups.length;
+  var applyEmail = (theme.social && theme.social.email) || '';
+  var siteTitle = config.title || '';
+%>
+<div class="layout-grid no-sidebar">
+  <div class="content-area">
+    <section class="links-hero">
+      <% if (cover) { %>
+      <div class="links-hero-bg"><img src="<%= cover %>" alt="" loading="lazy" /></div>
+      <div class="links-hero-overlay"></div>
+      <% } else { %>
+      <div class="links-hero-bg--fallback"></div>
+      <% } %>
+      <div class="links-hero-content">
+        <div class="links-hero-left">
+          <span class="links-hero-eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+            <span><%= linksTitle %></span>
+          </span>
+          <h1><%= linksTitle %></h1>
+          <p class="links-hero-desc"><%= linksSubtitle %></p>
+          <div class="links-hero-stats">
+            <div class="links-hero-stat">
+              <div class="links-hero-stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+              </div>
+              <div class="links-hero-stat-text">
+                <span class="links-hero-stat-num"><%= totalLinks %></span>
+                <span class="links-hero-stat-label">友链网站</span>
+              </div>
+            </div>
+            <span class="links-hero-stat-divider"></span>
+            <div class="links-hero-stat">
+              <div class="links-hero-stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <div class="links-hero-stat-text">
+                <span class="links-hero-stat-num"><%= totalGroups %></span>
+                <span class="links-hero-stat-label">链接分组</span>
+              </div>
+            </div>
+            <span class="links-hero-stat-divider"></span>
+            <div class="links-hero-stat">
+              <div class="links-hero-stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 16a6 6 0 0 1 12 0" />
+                  <path d="M6 8a6 6 0 0 1 12 0" />
+                </svg>
+              </div>
+              <div class="links-hero-stat-text">
+                <span class="links-hero-stat-num">∞</span>
+                <span class="links-hero-stat-label">无限可能</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="links-section">
+      <div class="links-section-header">
+        <h2>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.96c1.4 9.3-4.5 17.04-8.2 17.04z" />
+            <path d="M2 21c0-3 1.85-5.36 5.08-6" />
+          </svg>
+          友链列表
+        </h2>
+      </div>
+
+      <% if (groups.length) { %>
+      <div class="links-toolbar">
+        <nav class="link-filters" id="linkFilters">
+          <button type="button" class="link-filter active" data-group="__all__">
+            <span>全部</span>
+            <small><%= totalLinks %></small>
+          </button>
+          <% groups.forEach(function(grp) { %>
+          <button type="button" class="link-filter" data-group="<%= grp.name %>">
+            <span><%= grp.display_name %></span>
+            <small><%= (grp.links || []).length %></small>
+          </button>
+          <% }); %>
+        </nav>
+        <div class="links-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" id="linksSearchInput" placeholder="搜索友链..." autocomplete="off" />
+        </div>
+      </div>
+      <% } %>
+
+      <% if (groups.length) { %>
+        <% groups.forEach(function(grp) { %>
+        <section class="link-group" data-link-group data-group-name="<%= grp.name %>">
+          <% if (totalGroups > 1) { %>
+          <header class="link-group-header">
+            <h3><%= grp.display_name || '未分组' %></h3>
+            <small><%= (grp.links || []).length %> 个站点</small>
+          </header>
+          <% } %>
+          <% if (grp.links && grp.links.length) { %>
+          <div class="link-cards">
+            <% grp.links.forEach(function(link) {
+                 var displayName = link.name || link.display_name || 'Link';
+                 var logo = link.logo || '';
+                 var desc = link.description || '';
+                 var status = (link.status || 'online').toLowerCase();
+                 var backlink = link.backlink;
+            %>
+            <a
+              href="<%= link.url %>"
+              class="link-card"
+              target="_blank"
+              rel="noopener"
+              data-link-item
+              data-name="<%= displayName %>"
+              data-desc="<%= desc %>"
+              data-url="<%= link.url %>"
+            >
+              <div class="link-card-head">
+                <div class="link-card-logo<%= logo ? '' : ' is-fallback' %>">
+                  <% if (logo) { %>
+                  <img src="<%= logo %>" alt="<%= displayName %>" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('is-fallback');" />
+                  <% } %>
+                  <span class="link-card-logo-fallback"><%= displayName.charAt(0) %></span>
+                </div>
+                <div class="link-card-title-row">
+                  <span class="link-card-name"><%= displayName %></span>
+                  <span class="link-card-url"><%= link.url %></span>
+                </div>
+                <svg class="link-card-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </div>
+              <% if (desc) { %><p class="link-card-desc"><%= desc %></p><% } %>
+              <div class="link-card-footer">
+                <span class="link-tag"><%= grp.display_name %></span>
+                <div class="link-card-badges">
+                  <% if (status === 'online') { %>
+                  <span class="link-badge link-badge--ok" title="链接可访问"><span class="dot"></span>在线</span>
+                  <% } else if (status === 'offline') { %>
+                  <span class="link-badge link-badge--off" title="链接不可访问"><span class="dot"></span>离线</span>
+                  <% } else if (status === 'checking') { %>
+                  <span class="link-badge link-badge--check" title="正在检测"><span class="dot"></span>检测中</span>
+                  <% } %>
+                  <% if (backlink === true || backlink === 'FOUND') { %>
+                  <span class="link-badge link-badge--back" title="已回链"><span class="dot"></span>已回链</span>
+                  <% } else if (backlink === false || backlink === 'MISSING') { %>
+                  <span class="link-badge link-badge--back link-badge--back-miss" title="未回链"><span class="dot"></span>未回链</span>
+                  <% } %>
+                </div>
+              </div>
+            </a>
+            <% }); %>
+          </div>
+          <% } else { %>
+          <div class="empty-state"><p>该分组下暂无链接</p></div>
+          <% } %>
+        </section>
+        <% }); %>
+      <% } else { %>
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
+        <p>暂无友情链接</p>
+      </div>
+      <% } %>
+
+      <div class="links-search-empty" id="linksSearchEmpty" style="display: none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <p>未找到匹配的友链</p>
+        <small>尝试使用其他关键词搜索</small>
+      </div>
+    </section>
+
+    <section class="links-cta">
+      <div class="links-cta-inner">
+        <% if (applyEmail) { %>
+        <a class="links-cta-btn" href="mailto:<%= applyEmail %>?subject=<%= encodeURIComponent('申请友链 - ' + siteTitle) %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <span>申请友链</span>
+        </a>
+        <% } else { %>
+        <a class="links-cta-btn" href="mailto:hello@example.com?subject=<%= encodeURIComponent('申请友链 - ' + siteTitle) %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <span>申请友链</span>
+        </a>
+        <% } %>
+        <p>如果您的网站符合本站友链要求，欢迎申请交换友链，一起构建更好的技术社区！</p>
+      </div>
+    </section>
+
+    <%- partial('_partial/comment') %>
+  </div>
+</div>
+
+<script src="<%- url_for('/js/links.js') %>" defer></script>

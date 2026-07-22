@@ -1,0 +1,671 @@
+# hexo-theme-cosolar 主题配置
+# 对照 Halo settings.yaml 全部分组/字段；站点可用 _config.cosolar.yml 覆盖
+# 附件类字段请填写图片 URL 字符串；精选文章填写 permalink 列表
+
+# 站点图标（浏览器标签页），留空则使用主题内置 /images/favicon.png
+favicon: /images/favicon.png
+
+# ============================================================
+# 基础设置（Halo group: basic）
+# ============================================================
+basic:
+  # Logo 图片
+  # 上传/填写 Logo 图片 URL，留空则使用主题内置 /images/logo.png
+  logo_image: /images/logo.png
+
+  # Logo 图片宽度
+  # Logo 图片的显示宽度（像素），建议 20-80
+  logo_image_width: 36
+
+  # Logo 图片高度
+  # Logo 图片的显示高度（像素），建议 20-80
+  logo_image_height: 36
+
+  # Logo 文字
+  # 显示在头部导航栏的站点名称
+  logo_text: 码迹志
+
+  # 站点标语
+  # 显示在 Logo 下方的副标题
+  tagline: 记录技术成长，分享解决方案
+
+  # 页脚版权文字
+  # 显示在页脚底部的版权信息，支持 HTML
+  footer_text: ""
+
+  # ICP 备案号
+  # 如：京ICP备XXXXXXXX号
+  icp: ""
+
+# ============================================================
+# 页脚设置（Halo group: footer）
+# ============================================================
+footer:
+  # 显示页脚主区域
+  # 关闭后将隐藏页脚的品牌、统计与订阅主区域，仅保留底部版权信息
+  show_footer_main: true
+
+  # 页脚 Logo 图片
+  # 页脚品牌区显示的 Logo 图片，留空则使用「基础设置」Logo 或主题内置 /images/logo.png
+  logo_image: ""
+
+  # 页脚 Logo 宽度
+  # 页脚 Logo 显示宽度（像素），建议 20-80
+  logo_image_width: 36
+
+  # 页脚 Logo 高度
+  # 页脚 Logo 显示高度（像素），建议 20-80
+  logo_image_height: 36
+
+  # 页脚Logo显示名称
+  # 页脚品牌区显示的名称
+  logo_text: ""
+
+  # 页脚标语
+  # 页脚品牌区显示的标语，留空则使用站点标语
+  tagline: ""
+
+  # 页脚站点简介
+  # 页脚品牌区下方的站点简介，留空则使用页脚标语
+  footer_description: ""
+
+  # 页脚背景图片
+  # 页脚背景图片，建议浅色调、低饱和度图片以免影响内容阅读；留空则不显示背景图
+  bg_image: ""
+
+  # 背景图片透明度
+  # 页脚背景图的不透明度，值越小越淡，避免影响内容阅读（建议 0.05-1）
+  bg_image_opacity: 0.2
+
+  # 页脚背景图片（深色模式）
+  # 深色模式下页脚背景图片，留空则复用上方浅色模式的背景图
+  bg_image_dark: ""
+
+  # 背景图片透明度（深色模式）
+  # 深色模式下页脚背景图的不透明度，留空则复用浅色模式的透明度
+  bg_image_opacity_dark: 0.2
+
+  # 页脚文字与图标颜色
+  # 页脚品牌区文字（名称、标语、简介）及社交图标的颜色，留空则使用主题默认文字色
+  social_color: ""
+
+  # 页脚文字与图标颜色（深色模式）
+  # 深色模式下页脚品牌区文字及社交图标颜色，留空则复用上方浅色模式的颜色
+  social_color_dark: ""
+
+  # 隐私政策页面地址
+  # 留空则不显示页脚「隐私政策」链接
+  privacy_url: ""
+
+  # 使用条款页面地址
+  # 留空则不显示页脚「使用条款」链接
+  terms_url: ""
+
+  # 友情链接页面地址
+  # 留空则不显示页脚「友情链接」链接
+  links_url: "/links"
+
+  # 关于我们页面地址
+  # 留空则不显示页脚「关于我们」链接
+  about_url: "/about"
+
+# ============================================================
+# 主题样式（Halo group: style）
+# ============================================================
+style:
+  # 主题色
+  # 主色调，用于按钮、链接、标签等强调元素
+  primary_color: "#10B981"
+
+  # 默认配色方案
+  # 可选值：auto（跟随系统）| light（浅色）| dark（暗色）
+  color_scheme: auto
+
+  # 内容最大宽度
+  # 页面内容区域的最大宽度（像素），建议 960-1920
+  content_width: 1600
+
+  # 侧边栏宽度
+  # 右侧侧边栏的宽度（像素），建议 260-400
+  sidebar_width: 320
+
+  # 内容间距
+  # 内容区与侧边栏之间的间距（像素）
+  content_gap: 24
+
+  # 文章目录宽度
+  # 文章页右侧目录（TOC）的宽度（像素），建议 180-320
+  toc_width: 240
+
+  # 文章缺省封面图
+  # 文章未设置封面图时默认显示的图片，建议 16:9 横图；留空则显示代码图标占位符
+  default_post_cover: ""
+
+  # 正文字体族
+  # 自定义正文字体族（CSS font-family 语法），留空使用默认霞鹜文楷。例如 "Noto Sans SC", sans-serif 或 "LXGW WenKai", serif
+  font_family: ""
+
+  # 字体 CSS 地址
+  # 第三方字体 CSS 链接（如 Google Fonts、字节跳动 FontAPI 等），留空则使用默认霞鹜文楷 CDN。例如 https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap
+  font_css_url: ""
+
+  # 等宽字体族
+  # 自定义代码/等宽字体族，留空使用默认 JetBrains Mono。例如 "Source Code Pro", monospace
+  mono_family: ""
+
+  # 等宽字体 CSS 地址
+  # 第三方等宽字体 CSS 链接，留空则不额外加载
+  mono_css_url: ""
+
+  # 图标字体 CSS 地址
+  # 第三方图标库 CSS 链接（如 Font Awesome、Remix Icon、Lucide 等），留空则使用主题内置 iconfont。例如 https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css
+  icon_css_url: ""
+
+  # 图标类名前缀
+  # 图标 CSS 类名前缀，用于导航菜单图标。内置 iconfont 使用 iconfont，Font Awesome 使用 fa-solid/fas，Remix Icon 使用 ri，Lucide 使用 lucide
+  icon_prefix: "iconfont"
+
+# ============================================================
+# 博主信息（Halo group: social）
+# ============================================================
+social:
+  # 博主昵称
+  # 显示在页脚博主卡片上的昵称，留空则使用站点标题
+  author_name: ""
+
+  # 博主头像
+  # 显示在侧栏博主卡片的头像图片，建议 1:1 方形图；留空则使用主题内置 /images/logo.png
+  author_avatar: /images/logo.png
+
+  # 博主简介
+  # 显示在页脚博主卡片的一句话简介
+  author_bio: ""
+
+  # 博主所在地
+  # 显示在页脚博主卡片的所在地，例如：中国·深圳
+  author_location: ""
+
+  # 博主个人网站
+  # 显示在页脚博主卡片的个人网站链接
+  author_website: ""
+
+  # 建站时间
+  # 显示在页脚博主卡片的建站时间，例如：2023-01-01
+  author_join_date: ""
+
+  # GitHub
+  # GitHub 主页地址
+  github: ""
+
+  # 邮箱
+  email: ""
+
+  # 掘金
+  juejin: ""
+
+  # 微信公众号
+  # 跳转微信公众号任意文章页（没有可留空）
+  wechat: ""
+
+  # CSDN
+  # CSDN 博客主页地址
+  csdn: ""
+
+  # 知乎
+  # 知乎个人主页地址
+  zhihu: ""
+
+  # RSS 订阅
+  # 留空则使用默认 RSS 地址
+  rss: ""
+
+  # 页脚订阅表单提交地址
+  # 第三方邮件订阅服务地址（如 Mailchimp），留空则仅展示表单不提交
+  footer_subscribe_action: ""
+
+# ============================================================
+# 首页轮播（Halo group: featured）
+# ============================================================
+featured:
+  # 启用精选轮播
+  # 在首页顶部显示精选文章轮播卡片
+  show_featured: true
+
+  # 轮播默认背景图
+  # 精选文章轮播卡片的背景封面图，留空则使用主题自带的默认背景图；若文章本身有封面图则优先使用
+  featured_cover: ""
+
+  # 优先使用文章封面
+  # 开启后，若文章本身设置了封面图则优先使用，否则使用上方配置的默认背景图
+  featured_cover_fallback: false
+
+  # 精选文章列表
+  # 选择要在首页轮播展示的文章，填写 permalink 或路径列表，可按顺序排列
+  featured_posts: []
+
+  # 自动轮播
+  # 开启后卡片自动切换
+  autoplay: true
+
+  # 轮播间隔（毫秒）
+  # 自动轮播的切换间隔时间，单位毫秒，最小 1000
+  interval: 5000
+
+  # 轮播最大文章数
+  # 回退模式下轮播最多显示的文章数量
+  featured_max_count: 5
+
+  # 无配置时的回退策略
+  # 可选值：latest（显示最新文章）| pinned（显示置顶文章）| none（不显示）
+  fallback: latest
+
+  # 首页加载方式
+  # 可选值：pagination（分页）| scroll（滚动加载）
+  # 首页文章列表的加载方式。分页：点击翻页切换（保留轮播图）；滚动加载：滚动到底部自动加载更多
+  # 注意：Hexo 移植版目前仅实现 pagination，选择 scroll 不会生效
+  home_load_mode: pagination
+
+# ============================================================
+# 侧边栏设置（Halo group: sidebar）
+# ============================================================
+sidebar:
+  # 显示侧边栏
+  # 在首页和列表页显示右侧侧边栏；小屏（≤768px）下自动隐藏
+  show_sidebar: true
+
+  # 显示博主展示
+  # 在侧边栏顶部显示博主个人信息卡片
+  show_author: true
+
+  # 博主背景图
+  # 博主展示模块的背景封面图，建议深色图片配合文字效果更佳。与「博主背景色」二选一，同时设置时背景图优先
+  author_bg_image: ""
+
+  # 博主背景色
+  # 博主展示模块的背景色，与「博主背景图」二选一，同时设置时背景图优先；留空则使用默认卡片样式
+  author_bg_color: ""
+
+  # 遮罩层颜色
+  # 博主背景图上的遮罩层颜色，配合下方「遮罩层透明度」一起使用
+  author_bg_overlay_color: "#000000"
+
+  # 遮罩层透明度
+  # 遮罩层的不透明度，0 为完全透明，1 为完全不透明
+  author_bg_overlay_opacity: 0.35
+
+  # 博主栏文字颜色
+  # 设置背景图/背景色后，博主卡片内所有文字和图标的颜色
+  author_bg_text_color: "#FFFFFF"
+
+  # 遮罩层颜色（深色模式）
+  # 深色模式下博主背景图上的遮罩层颜色
+  author_bg_overlay_color_dark: "#000000"
+
+  # 遮罩层透明度（深色模式）
+  # 深色模式下遮罩层的不透明度，默认略高于浅色模式
+  author_bg_overlay_opacity_dark: 0.45
+
+  # 博主栏文字颜色（深色模式）
+  # 深色模式下博主卡片内所有文字和图标的颜色
+  author_bg_text_color_dark: "#FFFFFF"
+
+  # 显示公告栏
+  # 在侧边栏博主信息下方显示公告栏
+  show_announcement: true
+
+  # 公告内容
+  # 公告栏显示的文本内容，支持 HTML
+  announcement_content: ""
+
+  # 显示热门标签
+  # 以词云形式展示标签，标签大小随文章数自动变化
+  show_tag_cloud: true
+
+  # 热门标签数量
+  # 标签云中最多显示的标签数量
+  tag_cloud_count: 20
+
+  # 显示公众号二维码
+  # 在侧边栏显示微信公众号二维码图片
+  show_wechat_qr: false
+
+  # 公众号二维码图片
+  # 上传微信公众号二维码图片，建议 1:1 正方形
+  wechat_qr_image: ""
+
+  # 公众号名称
+  # 显示在二维码下方的公众号名称，留空则显示「扫码关注」
+  wechat_qr_title: ""
+
+  # 显示分类导航
+  show_categories: true
+
+  # 分类显示数量
+  # 侧边栏分类导航最多显示的分类数量
+  categories_count: 6
+
+  # 显示近期更新
+  show_recent: true
+
+  # 近期更新数量
+  recent_count: 4
+
+  # 显示友情链接模块
+  # 在侧边栏显示友情链接模块，展示随机友链
+  show_sidebar_links: true
+
+  # 友情链接显示数量
+  # 侧边栏友情链接模块最多展示的友链数量
+  sidebar_links_count: 5
+
+  # 显示订阅资讯模块
+  # 在侧边栏显示订阅资讯模块，展示友站 RSS 最新动态（需自行提供订阅数据源）
+  show_sidebar_feeds: true
+
+  # 订阅资讯显示数量
+  # 侧边栏订阅资讯模块最多展示的资讯条目数量
+  sidebar_feeds_count: 5
+
+  # 侧边栏模块顺序
+  # 调整模块上下顺序；删除某项可隐藏对应模块；模块需在上方各自开关中已开启才会显示
+  # 可选 module：author | announcement | tag_cloud | wechat | categories | recent | links | feeds
+  sidebar_modules:
+    - module: author
+    - module: announcement
+    - module: tag_cloud
+    - module: wechat
+    - module: categories
+    - module: recent
+    - module: links
+    - module: feeds
+
+# ============================================================
+# 分类页设置（Halo group: category）
+# ============================================================
+category:
+  # 分类列表页封面图
+  # 分类列表页顶部 Header 区域的背景封面图，留空则显示默认渐变背景
+  categories_cover: ""
+
+  # 分类详情页封面图
+  # 分类详情页顶部 Hero 区域的背景封面图，留空则显示默认渐变背景
+  category_cover: ""
+
+  # 优先使用自带封面
+  # 开启后，分类详情页优先使用分类自身设置的封面图；关闭（默认）则优先使用上方配置的「分类详情页封面图」，分类自身封面作为兜底
+  category_own_cover_first: false
+
+# ============================================================
+# 标签页设置（Halo group: tag）
+# ============================================================
+tag:
+  # 标签列表页封面图
+  # 标签列表页顶部 Hero 区域的背景封面图，留空则显示默认渐变背景
+  tags_cover: ""
+
+  # 标签详情页封面图
+  # 标签详情页顶部 Hero 区域的背景封面图，留空则显示默认渐变背景；若标签本身设置了封面图则优先使用
+  tag_cover: ""
+
+# ============================================================
+# 归档页设置（Halo group: archive）
+# ============================================================
+archive:
+  # 归档页封面图
+  # 归档页顶部 Header 区域的背景封面图，留空则显示默认渐变背景
+  archives_cover: ""
+
+# ============================================================
+# 友情链接页设置（Halo group: links）
+# ============================================================
+links:
+  # 页面标题
+  # 友情链接页面的标题文字
+  links_title: "友情链接"
+
+  # 页面副标题
+  # 显示在友情链接页标题下方的描述文字
+  links_subtitle: "与优秀的开发者们互相学习，共同进步，以下是我精心挑选的技术伙伴们"
+
+  # 友情链接页封面图
+  # 友情链接页顶部 Hero 区域的背景封面图，留空则显示默认渐变背景
+  links_cover: ""
+
+# ============================================================
+# RSS 资讯页设置（Halo group: feeds）
+# 注意：Hexo 移植版暂未移植该页面 UI，以下配置项为预留，改动不会渲染独立 Feeds 页
+# ============================================================
+feeds:
+  # 页面标题
+  # RSS 资讯页面的标题文字
+  feeds_title: "RSS 资讯"
+
+  # 页面副标题
+  # 显示在标题下方的描述文字
+  feeds_subtitle: "聚合优质信息源，掌握技术前沿动态"
+
+  # 页面封面图
+  # RSS 资讯页顶部 Hero 区域的背景封面图，留空则显示默认渐变背景
+  feeds_cover: ""
+
+  # 每页资讯数量
+  # 每页显示的 RSS 资讯条目数量，建议 10-30
+  feeds_page_size: 10
+
+# ============================================================
+# 关于页（Hexo 扩展：about）
+# 主题 pages/about.md 由 generator 生成 /about/；博客 source/about/ 可覆盖
+# ============================================================
+about:
+  # 关于页 Hero 副标题（也可在页面 front-matter description 中写）
+  subtitle: "清风徐来，码迹自留 — Cosolar 从 Halo 到 Hexo 的移植纪实"
+
+  # 关于页封面图 URL，留空则使用主题默认精选背景图
+  cover: ""
+
+# ============================================================
+# 页面背景 · 浅色模式（Halo group: background_light）
+# ============================================================
+background_light:
+  # 背景类型
+  # 可选值：none（无/默认纯色）| image（自定义背景图）| dynamic（动态渲染背景）
+  # 浅色模式下的页面背景类型
+  bg_type: none
+
+  # 背景图
+  # 浅色模式下显示的背景图，建议使用浅色调、低饱和度图片以免影响内容阅读
+  bg_image: ""
+
+  # 背景图透明度
+  # 背景图的不透明度，值越小越淡，避免影响内容阅读
+  bg_image_opacity: 0.2
+
+  # 动态背景类型
+  # 可选值：particles（粒子连线）| gradient（渐变流光）| bubbles（气泡漂浮）| stars（星空闪烁）| mesh（网格波纹）
+  # 浅色模式下的动态渲染背景效果
+  bg_dynamic_type: particles
+
+  # 动态背景主色
+  # 动态背景的主要颜色
+  bg_dynamic_color1: "#10B981"
+
+  # 动态背景辅色
+  # 动态背景的辅助颜色，用于渐变和混合效果
+  bg_dynamic_color2: "#3B82F6"
+
+  # 动态背景透明度
+  # 动态背景的不透明度，值越小越淡
+  bg_dynamic_opacity: 0.15
+
+# ============================================================
+# 页面背景 · 深色模式（Halo group: background_dark）
+# ============================================================
+background_dark:
+  # 背景类型
+  # 可选值：none（无/默认纯色）| image（自定义背景图）| dynamic（动态渲染背景）
+  # 深色模式下的页面背景类型
+  bg_type: none
+
+  # 背景图
+  # 深色模式下显示的背景图，建议使用深色调图片
+  bg_image: ""
+
+  # 背景图透明度
+  # 背景图的不透明度，值越小越淡，避免影响内容阅读
+  bg_image_opacity: 0.2
+
+  # 动态背景类型
+  # 可选值：particles（粒子连线）| gradient（渐变流光）| bubbles（气泡漂浮）| stars（星空闪烁）| mesh（网格波纹）
+  # 深色模式下的动态渲染背景效果，默认星空闪烁
+  bg_dynamic_type: stars
+
+  # 动态背景主色
+  # 动态背景的主要颜色
+  bg_dynamic_color1: "#10B981"
+
+  # 动态背景辅色
+  # 动态背景的辅助颜色，用于渐变和混合效果
+  bg_dynamic_color2: "#3B82F6"
+
+  # 动态背景透明度
+  # 动态背景的不透明度，值越小越淡
+  bg_dynamic_opacity: 0.15
+
+# ============================================================
+# 导航菜单（Hexo 扩展：menu）
+# 对应 Halo 菜单 + 菜单项 icon 注解；icon 为 iconfont 类名（可不含前缀冲突时写全类名）
+# 支持多级：用 children（或 submenu）嵌套；可无限层级（桌面为下拉/飞出，移动端为手风琴）
+# 父级可无 url（写 # 或不写），仅作分组；也可同时配置 url 可点击跳转
+# ============================================================
+menu:
+  # 菜单项：name 显示名 / url 链接 / icon 图标类名 / children 子菜单 / target 可选
+  - name: 首页
+    url: /
+    icon: icon-shouye
+  - name: 分类
+    url: /categories/
+    icon: icon-fengfuduoyuan
+    # children:
+    #   - name: Java
+    #     url: /categories/Java/
+    #   - name: 更多
+    #     children:
+    #       - name: 专题页
+    #         url: /about/
+  - name: 标签
+    url: /tags/
+    icon: icon-bokexinwen
+  - name: 归档
+    url: /archives/
+    icon: icon-jishufuwu
+  - name: 友链
+    url: /links/
+    icon: icon-kaiyuan
+  - name: 关于
+    url: /about/
+    icon: icon-blog
+
+# ============================================================
+# 本地搜索（Hexo 扩展：search）
+# 依赖 hexo-generator-search（或同类插件）生成检索数据
+# ============================================================
+search:
+  # 是否启用搜索浮层
+  enable: true
+
+  # 搜索数据文件路径（相对站点根路径）
+  # 需与 hexo-generator-search 的 path 配置一致
+  path: search.json
+
+  # 搜索框占位提示文字
+  placeholder: 搜索文章
+
+# ============================================================
+# 评论系统（Hexo 扩展：comment）
+# 可选 provider：none | twikoo | waline
+# ============================================================
+comment:
+  # 评论服务提供方；none 表示关闭评论
+  provider: none
+
+  # Twikoo 配置（provider 为 twikoo 时生效）
+  twikoo:
+    # 环境 ID / 云函数地址
+    envId: ""
+    # 环境地域（腾讯云环境可选，如 ap-shanghai；自建可留空）
+    region: ""
+
+  # Waline 配置（provider 为 waline 时生效）
+  waline:
+    # Waline 服务端地址（必填）
+    serverURL: ""
+    # 界面语言，如 zh-CN、en
+    lang: zh-CN
+    # 是否开启表情反应
+    reaction: false
+    # 评论者信息字段：nick（昵称）/ mail（邮箱）/ link（网址）
+    meta:
+      - nick
+      - mail
+      - link
+    # 必填的评论者信息字段
+    requiredMeta:
+      - nick
+      - mail
+    # 每页评论数量
+    pageSize: 10
+    # 暗色模式：true | false | auto | 选择器字符串
+    dark: auto
+    # 是否显示浏览量
+    pageview: false
+    # 评论框占位提示
+    placeholder: 说点什么吧…
+
+# ============================================================
+# 不蒜子访问统计（Hexo 扩展：busuanzi）
+# ============================================================
+busuanzi:
+  # 是否启用不蒜子站点/页面访问量统计
+  enable: true
+
+# ============================================================
+# 代码高亮（Hexo 扩展：code）
+# Mac 窗口样式；随亮/暗色与主题色切换；超高代码可折叠
+# 站点 _config.yml 请开启 highlight（Hexo 内置）或 prism
+# ============================================================
+code:
+  # 是否启用主题代码块美化（Mac 窗、折叠、复制）
+  enable: true
+
+  # 代码块外观：mac（三色圆点标题栏）
+  style: mac
+
+  # 是否启用超高代码折叠
+  fold: true
+
+  # 折叠高度（像素）：代码区超过该高度显示「展开」按钮
+  # 建议 200–600；设为 0 表示不限制高度（等同关闭折叠）
+  fold_height: 320
+
+  # 是否显示一键复制按钮
+  copy: true
+
+# ============================================================
+# 文章点赞（Hexo 扩展：upvote）
+# 可选 provider：local（本地 localStorage）| leancloud（LeanCloud 云存储）
+# ============================================================
+upvote:
+  # 是否启用文章点赞
+  enable: true
+
+  # 点赞数据存储方式
+  provider: local
+
+  # LeanCloud 配置（provider 为 leancloud 时生效）
+  leancloud:
+    # Application ID
+    appId: ""
+    # Application Key
+    appKey: ""
+    # REST API 服务器地址（国际版/自建需填写）
+    serverURL: ""

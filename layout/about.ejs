@@ -1,0 +1,36 @@
+<%
+  var aboutCfg = theme.about || {};
+  var defaultCover = url_for('/images/featured-default.png');
+  var cover = aboutCfg.cover || page.cover || defaultCover;
+  var subtitle = aboutCfg.subtitle || page.description || '清风徐来，码迹自留 — Cosolar 从 Halo 到 Hexo 的移植纪实';
+%>
+<div class="layout-grid no-sidebar">
+  <div class="content-area">
+    <section class="page-hero">
+      <% if (cover) { %>
+      <div class="page-hero-bg"><img src="<%= cover %>" alt="" loading="lazy" /></div>
+      <div class="page-hero-overlay"></div>
+      <% } else { %>
+      <div class="page-hero-bg--fallback"></div>
+      <% } %>
+      <div class="page-hero-inner">
+        <span class="page-hero-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <span>关于</span>
+        </span>
+        <h1><%= page.title || '关于 Cosolar' %></h1>
+        <p class="page-hero-desc"><%= subtitle %></p>
+      </div>
+    </section>
+
+    <article class="article-detail about-page">
+      <div class="prose"><%- page.content %></div>
+    </article>
+
+    <%- partial('_partial/comment') %>
+  </div>
+</div>

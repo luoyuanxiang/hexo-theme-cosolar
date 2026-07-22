@@ -1,0 +1,72 @@
+<%
+  var style = theme.style || {};
+  var sidebar = theme.sidebar || {};
+  var basic = theme.basic || {};
+  var pageTitle = page.title ? (page.title + ' - ' + config.title) : config.title;
+  if (is_home()) pageTitle = config.title;
+%>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title><%= pageTitle %></title>
+<% if (config.description) { %><meta name="description" content="<%= config.description %>" /><% } %>
+<link rel="icon" type="image/png" href="<%= theme.favicon || config.favicon || url_for('/images/favicon.png') %>" />
+
+<link rel="stylesheet" href="<%- url_for('/css/main.css') %>" />
+<% if (theme.code && theme.code.enable !== false) { %>
+<link rel="stylesheet" href="<%- url_for('/css/code-highlight.css') %>" />
+<% } %>
+<% if (theme.search && theme.search.enable) { %>
+<link rel="stylesheet" href="<%- url_for('/css/search.css') %>" />
+<% } %>
+
+<% if (style.icon_css_url) { %>
+<link rel="stylesheet" href="<%= style.icon_css_url %>" />
+<% } else { %>
+<link rel="stylesheet" href="<%- url_for('/fonts/iconfont.css') %>" />
+<% } %>
+
+<% if (style.font_css_url) { %>
+<link rel="stylesheet" href="<%= style.font_css_url %>" media="print" onload="this.media='all'" />
+<% } else { %>
+<link rel="stylesheet" href="//npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'" />
+<% } %>
+<% if (style.mono_css_url) { %>
+<link rel="stylesheet" href="<%= style.mono_css_url %>" media="print" onload="this.media='all'" />
+<% } %>
+
+<style>
+  :root {
+    <% if (style.primary_color) { %>--color-primary: <%= style.primary_color %> !important;<% } %>
+    <% if (style.content_width) { %>--container-max: <%= style.content_width %>px !important;<% } %>
+    <% if (style.sidebar_width) { %>--sidebar-width: <%= style.sidebar_width %>px !important;<% } %>
+    <% if (style.content_gap) { %>--content-gap: <%= style.content_gap %>px !important;<% } %>
+    <% if (style.toc_width) { %>--toc-width: <%= style.toc_width %>px !important;<% } %>
+    <% if (style.font_family) { %>--font-sans: <%= style.font_family %> !important;<% } %>
+    <% if (style.mono_family) { %>--font-mono: <%= style.mono_family %> !important;<% } %>
+    <% if (theme.code && theme.code.fold_height != null) { %>--code-fold-height: <%= theme.code.fold_height %>px;<% } %>
+    <% if (sidebar.author_bg_overlay_color) { %>--author-bg-overlay-color: <%= sidebar.author_bg_overlay_color %> !important;<% } %>
+    <% if (sidebar.author_bg_overlay_opacity != null) { %>--author-bg-overlay-opacity: <%= sidebar.author_bg_overlay_opacity %> !important;<% } %>
+    <% if (sidebar.author_bg_text_color) { %>--author-bg-text-color: <%= sidebar.author_bg_text_color %> !important;<% } %>
+  }
+  [data-theme="dark"] {
+    <% if (sidebar.author_bg_overlay_color_dark) { %>--author-bg-overlay-color: <%= sidebar.author_bg_overlay_color_dark %> !important;<% } %>
+    <% if (sidebar.author_bg_overlay_opacity_dark != null) { %>--author-bg-overlay-opacity: <%= sidebar.author_bg_overlay_opacity_dark %> !important;<% } %>
+    <% if (sidebar.author_bg_text_color_dark) { %>--author-bg-text-color: <%= sidebar.author_bg_text_color_dark %> !important;<% } %>
+  }
+</style>
+
+<script>
+  (function () {
+    var saved = localStorage.getItem("cosolar-theme");
+    var scheme = document.documentElement.getAttribute("data-color-scheme") || "auto";
+    var theme =
+      saved ||
+      (scheme === "auto"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : scheme);
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-color-scheme", theme);
+  })();
+</script>

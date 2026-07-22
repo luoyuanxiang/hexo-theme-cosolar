@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'zh-CN' %>" data-color-scheme="<%= (theme.style && theme.style.color_scheme) || 'auto' %>">
+<head>
+  <%- partial('_partial/head') %>
+</head>
+<%
+  var lightBg = theme.background_light || {};
+  var darkBg = theme.background_dark || {};
+  var lightBgType = lightBg.bg_type || 'none';
+  var darkBgType = darkBg.bg_type || 'none';
+  var hasLightBg = lightBgType !== 'none';
+  var hasDarkBg = darkBgType !== 'none';
+%>
+<body
+  data-light-bg-type="<%= lightBgType %>"
+  data-light-bg-image="<%= lightBg.bg_image || '' %>"
+  data-light-bg-image-opacity="<%= lightBg.bg_image_opacity != null ? lightBg.bg_image_opacity : 0.2 %>"
+  data-light-bg-dynamic-type="<%= lightBg.bg_dynamic_type || 'particles' %>"
+  data-light-bg-dynamic-color1="<%= lightBg.bg_dynamic_color1 || '#10B981' %>"
+  data-light-bg-dynamic-color2="<%= lightBg.bg_dynamic_color2 || '#3B82F6' %>"
+  data-light-bg-dynamic-opacity="<%= lightBg.bg_dynamic_opacity != null ? lightBg.bg_dynamic_opacity : 0.15 %>"
+  data-dark-bg-type="<%= darkBgType %>"
+  data-dark-bg-image="<%= darkBg.bg_image || '' %>"
+  data-dark-bg-image-opacity="<%= darkBg.bg_image_opacity != null ? darkBg.bg_image_opacity : 0.2 %>"
+  data-dark-bg-dynamic-type="<%= darkBg.bg_dynamic_type || 'stars' %>"
+  data-dark-bg-dynamic-color1="<%= darkBg.bg_dynamic_color1 || '#10B981' %>"
+  data-dark-bg-dynamic-color2="<%= darkBg.bg_dynamic_color2 || '#3B82F6' %>"
+  data-dark-bg-dynamic-opacity="<%= darkBg.bg_dynamic_opacity != null ? darkBg.bg_dynamic_opacity : 0.15 %>"
+>
+  <% if (hasLightBg || hasDarkBg) { %>
+  <div class="site-bg">
+    <% if (hasLightBg) { %>
+    <div class="site-bg-light">
+      <% if (lightBgType === 'image' && lightBg.bg_image) { %>
+      <div class="site-bg-image-light" style="background-image: url(<%= lightBg.bg_image %>); --site-bg-img-opacity: <%= lightBg.bg_image_opacity != null ? lightBg.bg_image_opacity : 0.2 %>;"></div>
+      <% } %>
+      <% if (lightBgType === 'dynamic') { %>
+      <canvas class="site-bg-canvas-light"></canvas>
+      <% } %>
+    </div>
+    <% } %>
+    <% if (hasDarkBg) { %>
+    <div class="site-bg-dark">
+      <% if (darkBgType === 'image' && darkBg.bg_image) { %>
+      <div class="site-bg-image-dark" style="background-image: url(<%= darkBg.bg_image %>); --site-bg-img-opacity: <%= darkBg.bg_image_opacity != null ? darkBg.bg_image_opacity : 0.2 %>;"></div>
+      <% } %>
+      <% if (darkBgType === 'dynamic') { %>
+      <canvas class="site-bg-canvas-dark"></canvas>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+  <% } %>
+
+  <%- partial('_partial/header') %>
+
+  <main class="site-main">
+    <div class="container">
+      <%- body %>
+    </div>
+  </main>
+
+  <%- partial('_partial/footer') %>
+
+  <script src="<%- url_for('/js/main.js') %>" defer></script>
+  <% if (theme.code && theme.code.enable !== false) { %>
+  <script>
+    window.COSOLAR_CODE = {
+      enable: true,
+      style: '<%= (theme.code && theme.code.style) || 'mac' %>',
+      fold: <%= !(theme.code && theme.code.fold === false) %>,
+      fold_height: <%= (theme.code && theme.code.fold_height != null) ? theme.code.fold_height : 320 %>,
+      copy: <%= !(theme.code && theme.code.copy === false) %>
+    };
+  </script>
+  <script src="<%- url_for('/js/code-block.js') %>" defer></script>
+  <% } %>
+  <% if (theme.search && theme.search.enable) { %>
+  <script>
+    window.COSOLAR_SEARCH_PATH = '<%- url_for('/' + ((theme.search && theme.search.path) || 'search.json')) %>';
+  </script>
+  <script src="<%- url_for('/js/search.js') %>" defer></script>
+  <% } %>
+  <% if (theme.busuanzi && theme.busuanzi.enable) { %>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <% } %>
+</body>
+</html>
