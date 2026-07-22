@@ -50,11 +50,28 @@ npm update hexo-theme-cosolar
 
 ### 发布到 npm（维护者）
 
-仓库已配置 GitHub Actions：`.github/workflows/npm-publish.yml`，使用 Secret **`NPM_TOKENS`**。
+仓库已配置 GitHub Actions：[`.github/workflows/npm-publish.yml`](.github/workflows/npm-publish.yml)，读取 Secret **`NPM_TOKENS`**。
+
+**npm Token 要求**（否则会 `403`：Two-factor authentication…）：
+
+1. 打开 [npmjs.com → Access Tokens](https://www.npmjs.com/settings/~/tokens)
+2. 新建 **Automation** 令牌（推荐；可绕过 2FA，专供 CI），或 **Granular Access Token** 并勾选 publish + bypass 2FA
+3. 写入仓库 Secret（名称必须是 `NPM_TOKENS`）：
+
+```bash
+# 交互写入（粘贴 token）
+gh secret set NPM_TOKENS
+
+# 或从环境变量写入
+echo %NPM_TOKEN_VALUE% | gh secret set NPM_TOKENS
+```
+
+触发发布：
 
 ```bash
 # 手动触发
 gh workflow run "Publish to npm"
+gh run watch
 
 # 或打版本标签后推送（自动发布）
 git tag v1.0.0
