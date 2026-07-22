@@ -96,6 +96,11 @@ comment:
 busuanzi:
   enable: true
 
+# 文章阅读量：打开文章后会计数，并回填到首页卡片
+visit:
+  enable: true
+  provider: local # local | leancloud
+
 upvote:
   enable: true
   provider: local # local | leancloud

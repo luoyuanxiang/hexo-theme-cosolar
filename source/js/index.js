@@ -171,6 +171,7 @@
 
   var STORAGE_KEY = "cosolar-article-sort";
   var UPVOTE_PREFIX = "cosolar-upvote-";
+  var VISIT_PREFIX = "cosolar-visit-count:";
   var contentArea = document.querySelector(".content-area");
   var articleList = document.querySelector(".article-list");
   var filterTabs = document.querySelectorAll(".filter-tab");
@@ -200,14 +201,35 @@
     }
   }
 
+  function readLocalVisit(path) {
+    if (!path) return 0;
+    if (window.CosolarVisit && typeof CosolarVisit.read === "function") {
+      return CosolarVisit.read(path) || 0;
+    }
+    try {
+      var keys = [path, path.replace(/\/$/, ""), path.endsWith("/") ? path : path + "/"];
+      var max = 0;
+      for (var i = 0; i < keys.length; i++) {
+        var raw = localStorage.getItem(VISIT_PREFIX + keys[i]);
+        if (raw == null) continue;
+        var n = parseInt(raw, 10);
+        if (!isNaN(n) && n > max) max = n;
+      }
+      return max;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   function cardScore(card, mode) {
     var time = card.getAttribute("data-time") || "0";
-    var visit = parseInt(card.getAttribute("data-visit") || "0", 10) || 0;
+    var visitAttr = parseInt(card.getAttribute("data-visit") || "0", 10) || 0;
     var upvoteAttr = parseInt(card.getAttribute("data-upvote") || "0", 10) || 0;
     var sticky = card.getAttribute("data-sticky") === "1" ? 1 : 0;
     var word = parseInt(card.getAttribute("data-word") || "0", 10) || 0;
     var path = card.getAttribute("data-path") || "";
     var upvote = Math.max(upvoteAttr, readLocalUpvote(path));
+    var visit = Math.max(visitAttr, readLocalVisit(path));
 
     if (mode === "hot") {
       // 有阅读数用阅读数；否则用字数作弱信号，再按时间
@@ -279,6 +301,10 @@
     saved = localStorage.getItem(STORAGE_KEY);
   } catch (e) {}
   applyMode(saved || "latest");
+
+  document.addEventListener("cosolar:visits-updated", function () {
+    applyMode(window.CosolarHomeSort.getMode());
+  });
 
   filterTabs.forEach(function (tab) {
     tab.addEventListener("click", function (e) {

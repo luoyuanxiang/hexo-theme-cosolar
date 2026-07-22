@@ -76,7 +76,7 @@
       </div>
       <% } %>
 
-      <header class="article-detail-header">
+      <header class="article-detail-header" data-post-visit-path="<%= '/' + String(page.path || '').replace(/^\//, '') %>">
         <h1 class="article-detail-title"><%= page.title %></h1>
         <div class="article-detail-meta">
           <span class="meta-item">
@@ -95,13 +95,16 @@
             </svg>
             <time><%= date(page.date, 'YYYY-MM-DD') %></time>
           </span>
-          <% if (theme.busuanzi && theme.busuanzi.enable) { %>
+          <% if (!(theme.visit && theme.visit.enable === false) || (theme.busuanzi && theme.busuanzi.enable)) { %>
           <span class="meta-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx="12" cy="12" r="3" />
             </svg>
-            <span><span id="busuanzi_value_page_pv">0</span> 阅读</span>
+            <span><span id="postVisitCount">0</span> 阅读</span>
+            <% if (theme.busuanzi && theme.busuanzi.enable) { %>
+            <span id="busuanzi_value_page_pv" hidden aria-hidden="true">0</span>
+            <% } %>
           </span>
           <% } %>
           <span class="meta-item" id="postWordCount" hidden>

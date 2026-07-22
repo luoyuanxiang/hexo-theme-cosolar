@@ -629,6 +629,27 @@ busuanzi:
   enable: true
 
 # ============================================================
+# 文章阅读量（Hexo 扩展：visit）
+# Halo 的 post.stats.visit 在 Hexo 无服务端统计；本模块负责：
+# - 文章页累计阅读（同标签页 session 内只记 1 次）
+# - 首页卡片回填阅读数（.card-visit）
+# - 若开启不蒜子，会把页面 PV 同步进本地，便于首页展示
+# provider=leancloud 时可全站共享（复用 upvote.leancloud 或下方配置）
+# ============================================================
+visit:
+  # 是否启用文章阅读量（首页/列表会动态更新）
+  enable: true
+
+  # 存储方式：local（浏览器本地）| leancloud（云端共享）
+  provider: local
+
+  # LeanCloud（provider 为 leancloud 时；留空则回退 upvote.leancloud）
+  leancloud:
+    appId: ""
+    appKey: ""
+    serverURL: ""
+
+# ============================================================
 # 代码高亮（Hexo 扩展：code）
 # Mac 窗口样式；随亮/暗色与主题色切换；超高代码可折叠
 # 站点 _config.yml 请开启 highlight（Hexo 内置）或 prism

@@ -84,5 +84,23 @@
   <% if (theme.busuanzi && theme.busuanzi.enable) { %>
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   <% } %>
+  <% if (!(theme.visit && theme.visit.enable === false)) { %>
+  <script>
+    window.COSOLAR_VISIT = {
+      enable: true,
+      provider: '<%= (theme.visit && theme.visit.provider) || "local" %>',
+      leancloud: (function () {
+        var v = <%- JSON.stringify((theme.visit && theme.visit.leancloud) || {}) %>;
+        var u = <%- JSON.stringify((theme.upvote && theme.upvote.leancloud) || {}) %>;
+        return {
+          appId: v.appId || u.appId || '',
+          appKey: v.appKey || u.appKey || '',
+          serverURL: v.serverURL || u.serverURL || ''
+        };
+      })()
+    };
+  </script>
+  <script src="<%- url_for('/js/visit.js') %>" defer></script>
+  <% } %>
 </body>
 </html>

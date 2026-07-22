@@ -219,7 +219,8 @@ comment:
 
 - `upvote.provider: local`：浏览器 localStorage（默认）
 - `upvote.provider: leancloud`：填写 `appId` / `appKey` / `serverURL`
-- `busuanzi.enable: true`：页脚站点 PV、文章页阅读数
+- `busuanzi.enable: true`：页脚站点 PV；文章页隐藏节点同步到阅读数
+- `visit.enable: true`：文章阅读量累计，并回填首页卡片（`local` 本地 / `leancloud` 云端共享）
 
 ## 代码高亮（Mac 样式）
 
