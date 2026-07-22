@@ -3,7 +3,8 @@
 清风徐来，码迹自留 — **Cosolar** Hexo 主题（由 [Halo Cosolar](https://github.com/cosolar/halo-theme-cosolar) 像素级移植）。
 
 - 仓库：[github.com/luoyuanxiang/hexo-theme-cosolar](https://github.com/luoyuanxiang/hexo-theme-cosolar)
-- 视觉与交互对齐参考站：[blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/)
+- 在线 Demo：[luoyuanxiang.top](https://luoyuanxiang.top)
+- 视觉参考：[blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/)
 
 ## 功能清单
 
@@ -200,6 +201,24 @@ links:
 ### 分类 / 标签总览
 
 主题 generator 自动生成 `/categories/`、`/tags/` 总览页，无需额外 md。
+
+分类列表默认只展示**顶级分类**（`category.list_mode: top`），避免 Hexo 把多行 `categories` 解析成父子层级后出现同名重复卡片。
+
+若一篇文章要挂多个**平级**分类，请写成：
+
+```yaml
+categories:
+  - [开发笔记]
+  - [生活随笔]
+```
+
+不要写成：
+
+```yaml
+categories:
+  - 开发笔记
+  - 生活随笔   # Hexo 会当成「开发笔记 / 生活随笔」层级
+```
 
 ### 归档
 

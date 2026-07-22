@@ -8,8 +8,7 @@
 <% if (isIndex) { %>
 <%
   var cover = catCfg.categories_cover || defaultCover;
-  var categories = page.categories || site.categories;
-  var catArr = categories.toArray ? categories.toArray() : (categories || []);
+  var catArr = list_categories_ui({ mode: catCfg.list_mode || 'top' });
 %>
 <div class="layout-grid no-sidebar">
   <div class="content-area">
@@ -44,7 +43,7 @@
               </svg>
             </div>
             <div class="cat-text">
-              <div class="cat-name"><%= cat.name %></div>
+              <div class="cat-name"><%= cat.label || cat.name %></div>
               <div class="cat-count"><%= cat.length %> 篇文章</div>
             </div>
           </div>

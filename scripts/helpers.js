@@ -229,3 +229,61 @@ hexo.extend.helper.register('links_grouped', function () {
 
   return { groups: groups, links: links, total: links.length };
 });
+
+/**
+ * List categories for index / sidebar.
+ * Hexo treats multi-line categories as a hierarchy, which can create
+ * same-name children (e.g. 生活随笔 under 开发笔记 + top-level 生活随笔).
+ *
+ * mode:
+ *   top  — only root categories (default, avoids duplicate names)
+ *   all  — every category; nested names shown as "父 / 子"
+ */
+hexo.extend.helper.register('list_categories_ui', function (options) {
+  options = options || {};
+  const themeCat = (this.theme && this.theme.category) || {};
+  const mode = options.mode || themeCat.list_mode || 'top';
+  const limit = options.limit != null ? Number(options.limit) : 0;
+  const all = this.site.categories.toArray();
+
+  function fullName(cat) {
+    const names = [cat.name];
+    let parentId = cat.parent;
+    const guard = {};
+    while (parentId && !guard[parentId]) {
+      guard[parentId] = true;
+      const parent = all.find(function (c) {
+        return c._id === parentId;
+      });
+      if (!parent) break;
+      names.unshift(parent.name);
+      parentId = parent.parent;
+    }
+    return names.join(' / ');
+  }
+
+  let list = all.slice();
+  if (mode === 'top') {
+    list = list.filter(function (c) {
+      return !c.parent;
+    });
+  }
+
+  list = list
+    .map(function (c) {
+      return {
+        name: c.name,
+        label: mode === 'all' ? fullName(c) : c.name,
+        path: c.path,
+        length: c.length,
+        parent: c.parent,
+        _id: c._id,
+      };
+    })
+    .sort(function (a, b) {
+      return b.length - a.length || String(a.label).localeCompare(String(b.label), 'zh');
+    });
+
+  if (limit > 0) list = list.slice(0, limit);
+  return list;
+});

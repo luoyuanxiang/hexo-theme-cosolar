@@ -49,7 +49,7 @@
           <span class="author-stat-label">文章</span>
         </a>
         <a class="author-stat" href="<%- url_for('/categories/') %>">
-          <span class="author-stat-num"><%= site.categories.length %></span>
+          <span class="author-stat-num"><%= list_categories_ui({ mode: (theme.category && theme.category.list_mode) || 'top' }).length %></span>
           <span class="author-stat-label">分类</span>
         </a>
         <a class="author-stat" href="<%- url_for('/tags/') %>">
@@ -147,7 +147,7 @@
   <% if (mod === 'categories' && sb.show_categories !== false) { %>
   <%
     var catLimit = sb.categories_count || 6;
-    var catList = site.categories.limit(catLimit).toArray();
+    var catList = list_categories_ui({ mode: (theme.category && theme.category.list_mode) || 'top', limit: catLimit });
   %>
   <div class="widget">
     <div class="widget-title">
@@ -167,7 +167,7 @@
       <a href="<%- url_for(cat.path) %>" class="category-item">
         <span class="category-icon"><i class="iconfont <%= catIcon %>"></i></span>
         <span class="category-info">
-          <span class="category-name"><%= cat.name %></span>
+          <span class="category-name"><%= cat.label || cat.name %></span>
           <span class="category-count"><%= cat.length %> 篇</span>
         </span>
       </a>
