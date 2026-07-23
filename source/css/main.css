@@ -254,9 +254,8 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 1000;
+  /* backdrop-filter 会把内部 fixed 菜单困在顶栏高度内，毛玻璃改挂在 .header-inner */
   background: color-mix(in srgb, var(--color-card) 85%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
   transition:
     background-color var(--transition),
@@ -278,6 +277,8 @@ textarea {
   justify-content: space-between;
   height: var(--header-height);
   gap: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 /* Logo */
@@ -5716,43 +5717,47 @@ textarea {
     display: none;
   }
 
-  .header-nav {
+  /* 移动端菜单由 JS 挂到 body，避开顶栏 backdrop-filter 的 fixed 包含块 */
+  .header-nav,
+  body > .header-nav {
     display: flex;
     position: fixed;
     top: var(--header-height);
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 2001;
+    z-index: 10050;
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     padding: 14px 14px calc(20px + env(safe-area-inset-bottom));
     /* 不透明底，避免首页精选卡透出/盖住菜单 */
     background: var(--color-bg);
-    backdrop-filter: blur(24px) saturate(1.8);
-    -webkit-backdrop-filter: blur(24px) saturate(1.8);
     border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
     gap: 6px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     pointer-events: none;
     visibility: hidden;
-    transform: translateY(-16px);
+    transform: translateY(-12px);
     opacity: 0;
     transition:
-      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.28s ease,
-      visibility 0s linear 0.32s;
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
+      visibility 0s linear 0.28s;
   }
 
-  .header-nav.open {
+  .header-nav.open,
+  body > .header-nav.open {
     pointer-events: auto;
     visibility: visible;
     transform: translateY(0);
     opacity: 1;
     transition:
-      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.28s ease,
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
       visibility 0s linear 0s;
   }
 
@@ -5761,39 +5766,35 @@ textarea {
     touch-action: none;
   }
 
-  /* 菜单项：圆角、轻背景、错峰入场动画 */
+  /* 菜单项错峰入场（不再用 opacity:0 默认态，避免卡在不可见） */
   .header-nav > .nav-item {
-    opacity: 0;
-    transform: translateX(-24px);
-    transition:
-      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.26s ease;
+    transform: translateX(-16px);
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .header-nav.open > .nav-item {
-    opacity: 1;
     transform: translateX(0);
   }
   .header-nav.open > .nav-item:nth-child(1) {
-    transition-delay: 0.06s;
+    transition-delay: 0.04s;
   }
   .header-nav.open > .nav-item:nth-child(2) {
-    transition-delay: 0.12s;
+    transition-delay: 0.08s;
   }
   .header-nav.open > .nav-item:nth-child(3) {
-    transition-delay: 0.18s;
+    transition-delay: 0.12s;
   }
   .header-nav.open > .nav-item:nth-child(4) {
-    transition-delay: 0.24s;
+    transition-delay: 0.16s;
   }
   .header-nav.open > .nav-item:nth-child(5) {
-    transition-delay: 0.3s;
+    transition-delay: 0.2s;
   }
   .header-nav.open > .nav-item:nth-child(6) {
-    transition-delay: 0.36s;
+    transition-delay: 0.24s;
   }
   .header-nav.open > .nav-item:nth-child(n + 7) {
-    transition-delay: 0.42s;
+    transition-delay: 0.28s;
   }
 
   .header-nav .nav-link {

@@ -85,12 +85,13 @@ gh release create v1.0.0 --generate-notes
 ## 依赖插件
 
 ```bash
-npm install hexo-generator-search --save
+# 可选：官方搜索插件（主题已内置 search.json 生成，不装也能搜）
+# npm install hexo-generator-search --save
 # 可选：官方订阅插件（安装后主题内置 atom 生成器会自动让位）
 # npm install hexo-generator-feed --save
 ```
 
-博客 `_config.yml` 示例：
+博客 `_config.yml` 示例（仅在使用 `hexo-generator-search` 时需要；写在**博客**配置里，不是主题配置）：
 
 ```yaml
 search:
@@ -100,7 +101,9 @@ search:
   format: json
 ```
 
-主题默认生成 **`/atom.xml`**（`feed.enable: true`），页脚 / 侧栏 RSS 图标指向该地址。也可在 `social.rss` 填写自定义订阅 URL。
+主题默认会生成 **`/search.json`**（`search.enable: true`），搜索浮层直接读取该文件。
+
+主题默认也会生成 **`/sitemap.xml`** 与 **`/robots.txt`**（`seo.enable: true`）。请在博客 `_config.yml` 填写 `url`、`description`、`keywords`、`author`，文章可写 `description` / `cover` front-matter 以优化摘要与分享图。
 
 ## 配置入口
 
@@ -121,6 +124,10 @@ search:
 Hexo 扩展：
 
 - `menu` — 导航（含 icon，支持 `children` 多级菜单）
+- `search` — 本地搜索浮层 + 内置 `search.json`
+- `seo` — meta / Open Graph / Twitter / JSON-LD + 内置 `sitemap.xml` / `robots.txt`
+- `feed` — 内置 `atom.xml`
+- `comment` / `code` / `lazyload` / `visit` / `upvote` / `busuanzi`
 - `search` — 本地搜索
 - `comment` — `twikoo` / `waline` / `none`
 - `feed` — 内置 `/atom.xml`（已装 `hexo-generator-feed` 时自动让位）

@@ -287,3 +287,171 @@ hexo.extend.helper.register('list_categories_ui', function (options) {
   if (limit > 0) list = list.slice(0, limit);
   return list;
 });
+
+/**
+ * Absolute URL for SEO (Open Graph / canonical / JSON-LD).
+ */
+hexo.extend.helper.register('absolute_url', function (input) {
+  if (input == null || input === '') {
+    if (typeof this.full_url_for === 'function') return this.full_url_for('/');
+    return String(this.config.url || '').replace(/\/$/, '') + '/';
+  }
+  const s = String(input);
+  if (/^(https?:|data:|\/\/)/i.test(s)) {
+    if (s.indexOf('//') === 0) {
+      const proto = String(this.config.url || 'https://example.com').split(':')[0] || 'https';
+      return proto + ':' + s;
+    }
+    return s;
+  }
+  if (typeof this.full_url_for === 'function') return this.full_url_for(s);
+  const root = String(this.config.url || '').replace(/\/$/, '');
+  const path = this.url_for(s);
+  if (/^https?:/i.test(path)) return path;
+  return root + (path.charAt(0) === '/' ? path : '/' + path);
+});
+
+/**
+ * Build SEO payload used by layout/_partial/seo.ejs
+ */
+hexo.extend.helper.register('seo_info', function () {
+  const config = this.config || {};
+  const theme = this.theme || {};
+  const page = this.page || {};
+  const seo = theme.seo || {};
+  const basic = theme.basic || {};
+  const abs = this.absolute_url.bind(this);
+
+  const siteTitle = config.title || 'Hexo';
+  const siteDesc =
+    config.description || basic.tagline || basic.footer_description || siteTitle;
+  const author = config.author || basic.logo_text || siteTitle;
+
+  let title = siteTitle;
+  let description = siteDesc;
+  let type = 'website';
+  let image = seo.og_image || theme.favicon || basic.logo_image || '/images/logo.png';
+  let keywords = [];
+  let publishedTime = '';
+  let modifiedTime = '';
+  let noindex = !!seo.noindex;
+
+  if (Array.isArray(config.keywords)) {
+    keywords = config.keywords.slice();
+  } else if (config.keywords) {
+    keywords = String(config.keywords)
+      .split(/[,，]/)
+      .map(function (k) {
+        return k.trim();
+      })
+      .filter(Boolean);
+  }
+
+  const isHome = typeof this.is_home === 'function' && this.is_home();
+  const isPost = typeof this.is_post === 'function' && this.is_post();
+  const isArchive = typeof this.is_archive === 'function' && this.is_archive();
+  const isCategory = typeof this.is_category === 'function' && this.is_category();
+  const isTag = typeof this.is_tag === 'function' && this.is_tag();
+
+  if (isHome) {
+    var homeSub = config.subtitle || basic.tagline || '';
+    title = homeSub ? siteTitle + ' - ' + homeSub : siteTitle;
+    description = siteDesc;
+  } else if (isPost || (page.layout === 'post' && page.title)) {
+    type = 'article';
+    title = (page.title || 'Untitled') + ' - ' + siteTitle;
+    description = this.post_excerpt(page, 160) || siteDesc;
+    image = this.post_cover(page) || image;
+    publishedTime = seoToIso(page.date);
+    modifiedTime = seoToIso(page.updated || page.date);
+    if (page.tags && page.tags.each) {
+      page.tags.each(function (tag) {
+        if (tag && tag.name) keywords.push(tag.name);
+      });
+    }
+    if (page.categories && page.categories.each) {
+      page.categories.each(function (cat) {
+        if (cat && cat.name) keywords.push(cat.name);
+      });
+    }
+    if (page.keywords) {
+      String(page.keywords)
+        .split(/[,，]/)
+        .forEach(function (k) {
+          if (k.trim()) keywords.push(k.trim());
+        });
+    }
+  } else if (isCategory && page.category) {
+    title = page.category + ' - ' + siteTitle;
+    description = '分类「' + page.category + '」下的文章列表 - ' + siteTitle;
+    keywords.push(page.category);
+  } else if (isTag && page.tag) {
+    title = page.tag + ' - ' + siteTitle;
+    description = '标签「' + page.tag + '」下的文章列表 - ' + siteTitle;
+    keywords.push(page.tag);
+  } else if (isArchive) {
+    title = '归档 - ' + siteTitle;
+    description = siteTitle + ' 的文章归档';
+  } else if (page.title) {
+    title = page.title + ' - ' + siteTitle;
+    description =
+      (page.description && this.strip_html(page.description)) ||
+      (page.excerpt && this.strip_html(page.excerpt)) ||
+      siteDesc;
+    if (page.cover) image = page.cover;
+  }
+
+  const seen = {};
+  keywords = keywords.filter(function (k) {
+    const key = String(k).toLowerCase();
+    if (!key || seen[key]) return false;
+    seen[key] = true;
+    return true;
+  });
+
+  description = String(description || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 180);
+
+  let canonicalPath = page.permalink || page.path || '/';
+  if (isHome) canonicalPath = '/';
+  const canonical = abs(canonicalPath);
+  const imageUrl = abs(image);
+
+  if (seo.noindex_pagination && page.current > 1) noindex = true;
+  if (seo.noindex_archives && (isArchive || isCategory || isTag)) noindex = true;
+  if (page.robots === 'noindex' || page.noindex) noindex = true;
+
+  return {
+    enable: seo.enable !== false,
+    title: title,
+    description: description,
+    keywords: keywords,
+    type: type,
+    canonical: canonical,
+    image: imageUrl,
+    siteName: siteTitle,
+    author: author,
+    locale: String(config.language || 'zh-CN').replace(/-/g, '_'),
+    publishedTime: publishedTime,
+    modifiedTime: modifiedTime,
+    twitterCard: seo.twitter_card || 'summary_large_image',
+    twitterSite: seo.twitter_site || '',
+    noindex: noindex,
+    isHome: isHome,
+    isPost: isPost || type === 'article',
+    themeColor: (theme.style && theme.style.primary_color) || '#10B981',
+  };
+});
+
+function seoToIso(d) {
+  if (!d) return '';
+  try {
+    if (typeof d.toDate === 'function') return d.toDate().toISOString();
+    if (d instanceof Date) return d.toISOString();
+    return new Date(d).toISOString();
+  } catch (e) {
+    return '';
+  }
+}

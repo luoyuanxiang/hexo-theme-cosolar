@@ -145,7 +145,7 @@
       .catch(function (err) {
         loading = false;
         loadError = err;
-        setStatus("无法加载搜索索引 (/search.json)");
+        setStatus("无法加载搜索索引 (" + INDEX_URL + ")");
         throw err;
       });
   }

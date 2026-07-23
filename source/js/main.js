@@ -35,13 +35,52 @@
   var menuToggle = document.getElementById("menuToggle");
   var headerNav = document.getElementById("headerNav");
   var siteHeader = document.querySelector(".site-header");
+  var mobileMq = window.matchMedia("(max-width: 768px)");
+  var navPortalParent = null;
+  var navPortalNext = null;
+
+  // 顶栏 backdrop-filter / sticky 会让内部 fixed 菜单被裁切，移动端把 nav 挂到 body
+  function syncMobileNavPortal() {
+    if (!headerNav) return;
+    var mobile = mobileMq.matches;
+    if (mobile) {
+      if (headerNav.parentElement !== document.body) {
+        navPortalParent = headerNav.parentElement;
+        navPortalNext = headerNav.nextSibling;
+        document.body.appendChild(headerNav);
+        headerNav.setAttribute("data-portaled", "true");
+      }
+    } else {
+      if (headerNav.getAttribute("data-portaled") === "true" && navPortalParent) {
+        if (navPortalNext && navPortalNext.parentNode === navPortalParent) {
+          navPortalParent.insertBefore(headerNav, navPortalNext);
+        } else {
+          var actions = navPortalParent.querySelector(".header-actions");
+          if (actions) navPortalParent.insertBefore(headerNav, actions);
+          else navPortalParent.appendChild(headerNav);
+        }
+        headerNav.removeAttribute("data-portaled");
+        navPortalParent = null;
+        navPortalNext = null;
+      }
+      setMobileMenuOpen(false);
+    }
+  }
 
   function setMobileMenuOpen(open) {
+    if (open) syncMobileNavPortal();
     if (menuToggle) menuToggle.classList.toggle("active", open);
     if (headerNav) headerNav.classList.toggle("open", open);
     if (siteHeader) siteHeader.classList.toggle("is-menu-open", open);
     document.body.classList.toggle("menu-open", open);
     if (menuToggle) menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  syncMobileNavPortal();
+  if (typeof mobileMq.addEventListener === "function") {
+    mobileMq.addEventListener("change", syncMobileNavPortal);
+  } else if (typeof mobileMq.addListener === "function") {
+    mobileMq.addListener(syncMobileNavPortal);
   }
 
   if (menuToggle) {

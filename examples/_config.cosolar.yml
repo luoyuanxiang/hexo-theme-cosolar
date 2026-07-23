@@ -85,6 +85,13 @@ search:
   path: search.json
   placeholder: 搜索文章
 
+seo:
+  enable: true
+  sitemap: true
+  robots: true
+  # og_image: /images/logo.png
+  # twitter_site: ""
+
 comment:
   provider: none # none | twikoo | waline
   twikoo:

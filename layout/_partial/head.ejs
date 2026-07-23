@@ -2,14 +2,17 @@
   var style = theme.style || {};
   var sidebar = theme.sidebar || {};
   var basic = theme.basic || {};
-  var pageTitle = page.title ? (page.title + ' - ' + config.title) : config.title;
-  if (is_home()) pageTitle = config.title;
+  var seo = (typeof seo_info === 'function') ? seo_info() : null;
+  var pageTitle = (seo && seo.title) ? seo.title : (page.title ? (page.title + ' - ' + config.title) : config.title);
+  if (!seo && is_home()) pageTitle = config.title;
 %>
 <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title><%= pageTitle %></title>
-<% if (config.description) { %><meta name="description" content="<%= config.description %>" /><% } %>
+<%- partial('_partial/seo') %>
 <link rel="icon" type="image/png" href="<%= theme.favicon || config.favicon || url_for('/images/favicon.png') %>" />
+<link rel="apple-touch-icon" href="<%= theme.favicon || basic.logo_image || url_for('/images/logo.png') %>" />
 <% if (!(theme.feed && theme.feed.enable === false) || (theme.social && theme.social.rss)) { %>
 <link
   rel="alternate"
@@ -17,6 +20,9 @@
   title="<%= config.title %>"
   href="<%= (theme.social && theme.social.rss) || url_for('/' + ((theme.feed && theme.feed.path) || 'atom.xml')) %>"
 />
+<% } %>
+<% if (!(theme.seo && theme.seo.sitemap === false)) { %>
+<link rel="sitemap" type="application/xml" title="Sitemap" href="<%= url_for('/' + ((theme.seo && theme.seo.sitemap_path) || 'sitemap.xml')) %>" />
 <% } %>
 
 <link rel="stylesheet" href="<%- url_for('/css/main.css') %>" />

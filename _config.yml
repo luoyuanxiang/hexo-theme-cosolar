@@ -574,15 +574,21 @@ menu:
 
 # ============================================================
 # 本地搜索（Hexo 扩展：search）
-# 依赖 hexo-generator-search（或同类插件）生成检索数据
+# 主题内置生成 search.json；也可改用 hexo-generator-search
+# （注意：插件配置写在博客 _config.yml，不是主题配置）
 # ============================================================
 search:
   # 是否启用搜索浮层
   enable: true
 
   # 搜索数据文件路径（相对站点根路径）
-  # 需与 hexo-generator-search 的 path 配置一致
   path: search.json
+
+  # 索引范围：post | page | all
+  field: post
+
+  # 是否把正文写入索引（体积更大、命中更准）
+  content: true
 
   # 搜索框占位提示文字
   placeholder: 搜索文章
@@ -635,6 +641,42 @@ comment:
 lazyload:
   # 是否启用图片懒加载
   enable: true
+
+# ============================================================
+# SEO（Hexo 扩展：seo）
+# 主题内置：页面 meta / Open Graph / Twitter Card / JSON-LD
+# 以及 sitemap.xml、robots.txt（已装官方插件时自动让位）
+# ============================================================
+seo:
+  # 是否启用 SEO 标签与结构化数据
+  enable: true
+
+  # 是否生成 sitemap.xml
+  sitemap: true
+
+  # sitemap 路径
+  sitemap_path: sitemap.xml
+
+  # 是否生成 robots.txt
+  robots: true
+
+  # 追加到 robots.txt 的额外行（如 Disallow: /admin/）
+  robots_extra: []
+
+  # 默认分享图（文章无封面时使用），建议填绝对或站点内路径
+  og_image: ""
+
+  # Twitter Card 类型：summary | summary_large_image
+  twitter_card: summary_large_image
+
+  # Twitter / X 站点账号，如 @yourname（可留空）
+  twitter_site: ""
+
+  # 分页页（page/2）是否 noindex
+  noindex_pagination: false
+
+  # 归档 / 分类 / 标签列表页是否 noindex
+  noindex_archives: false
 
 # ============================================================
 # Atom / RSS 订阅（Hexo 扩展：feed）

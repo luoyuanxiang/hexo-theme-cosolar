@@ -1,0 +1,150 @@
+<%
+  var seo = seo_info();
+%>
+<% if (seo.enable) { %>
+<%
+  var searchEnabled = theme.search && theme.search.enable !== false;
+
+  function escAttr(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  var graph = [];
+  var websiteLd = {
+    '@type': 'WebSite',
+    '@id': absolute_url('/') + '#website',
+    name: seo.siteName,
+    url: absolute_url('/'),
+    description: config.description || seo.description,
+    inLanguage: config.language || 'zh-CN',
+    publisher: {
+      '@type': 'Organization',
+      name: seo.author,
+      url: absolute_url('/'),
+      logo: {
+        '@type': 'ImageObject',
+        url: absolute_url(theme.favicon || (theme.basic && theme.basic.logo_image) || '/images/logo.png')
+      }
+    }
+  };
+  if (searchEnabled) {
+    websiteLd.potentialAction = {
+      '@type': 'SearchAction',
+      target: absolute_url('/') + '?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    };
+  }
+  graph.push(websiteLd);
+
+  if (seo.isPost) {
+    var tagNames = [];
+    if (page.tags && page.tags.each) {
+      page.tags.each(function (tag) {
+        if (tag && tag.name) tagNames.push(tag.name);
+      });
+    }
+    var articleLd = {
+      '@type': 'BlogPosting',
+      '@id': seo.canonical + '#article',
+      headline: page.title || seo.title,
+      description: seo.description,
+      image: [seo.image],
+      datePublished: seo.publishedTime || undefined,
+      dateModified: seo.modifiedTime || seo.publishedTime || undefined,
+      author: {
+        '@type': 'Person',
+        name: page.author || seo.author
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: seo.siteName,
+        logo: {
+          '@type': 'ImageObject',
+          url: absolute_url(theme.favicon || (theme.basic && theme.basic.logo_image) || '/images/logo.png')
+        }
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': seo.canonical
+      },
+      url: seo.canonical,
+      inLanguage: config.language || 'zh-CN'
+    };
+    if (tagNames.length) articleLd.keywords = tagNames.join(', ');
+    graph.push(articleLd);
+
+    var crumbs = [
+      { '@type': 'ListItem', position: 1, name: '首页', item: absolute_url('/') }
+    ];
+    var pos = 2;
+    if (page.categories && page.categories.length) {
+      var catList = page.categories.toArray ? page.categories.toArray() : [];
+      var cat = catList[0];
+      if (cat) {
+        crumbs.push({
+          '@type': 'ListItem',
+          position: pos++,
+          name: cat.name,
+          item: absolute_url(cat.path)
+        });
+      }
+    }
+    crumbs.push({
+      '@type': 'ListItem',
+      position: pos,
+      name: page.title || seo.title,
+      item: seo.canonical
+    });
+    graph.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs
+    });
+  }
+
+  var ld = {
+    '@context': 'https://schema.org',
+    '@graph': graph
+  };
+%>
+<meta name="description" content="<%= escAttr(seo.description) %>" />
+<% if (seo.keywords.length) { %><meta name="keywords" content="<%= escAttr(seo.keywords.join(',')) %>" /><% } %>
+<meta name="author" content="<%= escAttr(seo.author) %>" />
+<meta name="robots" content="<%= seo.noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' %>" />
+<meta name="theme-color" content="<%= escAttr(seo.themeColor) %>" />
+<link rel="canonical" href="<%= escAttr(seo.canonical) %>" />
+
+<meta property="og:type" content="<%= seo.type %>" />
+<meta property="og:title" content="<%= escAttr(seo.title) %>" />
+<meta property="og:description" content="<%= escAttr(seo.description) %>" />
+<meta property="og:url" content="<%= escAttr(seo.canonical) %>" />
+<meta property="og:site_name" content="<%= escAttr(seo.siteName) %>" />
+<meta property="og:locale" content="<%= escAttr(seo.locale) %>" />
+<meta property="og:image" content="<%= escAttr(seo.image) %>" />
+<% if (seo.isPost) { %>
+<% if (seo.publishedTime) { %><meta property="article:published_time" content="<%= seo.publishedTime %>" /><% } %>
+<% if (seo.modifiedTime) { %><meta property="article:modified_time" content="<%= seo.modifiedTime %>" /><% } %>
+<meta property="article:author" content="<%= escAttr(seo.author) %>" />
+<% if (page.tags && page.tags.each) { page.tags.each(function (tag) { %>
+<meta property="article:tag" content="<%= escAttr(tag.name) %>" />
+<% }); } %>
+<% } %>
+
+<meta name="twitter:card" content="<%= escAttr(seo.twitterCard) %>" />
+<meta name="twitter:title" content="<%= escAttr(seo.title) %>" />
+<meta name="twitter:description" content="<%= escAttr(seo.description) %>" />
+<meta name="twitter:image" content="<%= escAttr(seo.image) %>" />
+<% if (seo.twitterSite) { %><meta name="twitter:site" content="<%= escAttr(seo.twitterSite) %>" /><% } %>
+
+<% if (page.current && page.total && page.current > 1) { %>
+<link rel="prev" href="<%= absolute_url(page_url(page.current - 1)) %>" />
+<% } %>
+<% if (page.current && page.total && page.current < page.total) { %>
+<link rel="next" href="<%= absolute_url(page_url(page.current + 1)) %>" />
+<% } %>
+
+<script type="application/ld+json"><%- JSON.stringify(ld) %></script>
+<% } %>
