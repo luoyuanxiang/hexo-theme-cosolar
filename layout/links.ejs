@@ -8,8 +8,41 @@
   var groups = grouped.groups || [];
   var totalLinks = grouped.total || 0;
   var totalGroups = groups.length;
-  var applyEmail = (theme.social && theme.social.email) || '';
-  var siteTitle = config.title || '';
+  var basic = theme.basic || {};
+  var social = theme.social || {};
+  var applyCfg = linksCfg.apply || {};
+  var showApply = applyCfg.enable !== false;
+
+  var applyName = applyCfg.site_name || basic.logo_text || config.title || '';
+  var applyDesc = applyCfg.site_description || basic.tagline || config.description || social.author_bio || '';
+  var applyUrl = applyCfg.site_url || (config.url ? String(config.url).replace(/\/$/, '') + '/' : '/');
+  var applyAvatar = applyCfg.site_avatar || social.author_avatar || basic.logo_image || theme.favicon || url_for('/images/logo.png');
+  var applyRss = applyCfg.site_rss || social.rss || url_for('/' + ((theme.feed && theme.feed.path) || 'atom.xml'));
+  if (typeof absolute_url === 'function') {
+    if (applyAvatar && applyAvatar.charAt(0) === '/') applyAvatar = absolute_url(applyAvatar);
+    if (applyRss && applyRss.charAt(0) === '/') applyRss = absolute_url(applyRss);
+    if (applyUrl && applyUrl.charAt(0) === '/') applyUrl = absolute_url(applyUrl);
+  }
+
+  var applySteps = Array.isArray(applyCfg.steps) && applyCfg.steps.length
+    ? applyCfg.steps
+    : [
+        { title: '添加本站友链', desc: '请先复制左侧本站信息，并添加到贵站的友情链接中' },
+        { title: '评论留言', desc: '在本页下方评论区留言申请，提供贵站名称、简介、链接与头像' },
+        { title: '等待审核', desc: '审核通过后会添加友链，请耐心等待' }
+      ];
+  var notice = applyCfg.notice || {};
+  var disclaimer = applyCfg.disclaimer || {};
+  var showNotice = notice.enable !== false && Array.isArray(notice.items) && notice.items.length;
+  var showDisclaimer = disclaimer.enable !== false && Array.isArray(disclaimer.items) && disclaimer.items.length;
+
+  var siteFields = [
+    { label: '站点名称', value: applyName },
+    { label: '站点描述', value: applyDesc },
+    { label: '站点链接', value: applyUrl },
+    { label: '头像链接', value: applyAvatar },
+    { label: 'RSS 地址', value: applyRss }
+  ].filter(function (f) { return f.value; });
 %>
 <div class="layout-grid no-sidebar">
   <div class="content-area">
@@ -185,28 +218,111 @@
       </div>
     </section>
 
-    <section class="links-cta">
-      <div class="links-cta-inner">
-        <% if (applyEmail) { %>
-        <a class="links-cta-btn" href="mailto:<%= applyEmail %>?subject=<%= encodeURIComponent('申请友链 - ' + siteTitle) %>">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-          </svg>
-          <span>申请友链</span>
-        </a>
-        <% } else { %>
-        <a class="links-cta-btn" href="mailto:hello@example.com?subject=<%= encodeURIComponent('申请友链 - ' + siteTitle) %>">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-          </svg>
-          <span>申请友链</span>
-        </a>
-        <% } %>
-        <p>如果您的网站符合本站友链要求，欢迎申请交换友链，一起构建更好的技术社区！</p>
+    <% if (showApply) { %>
+    <section class="links-apply" aria-label="申请友链">
+      <div class="links-apply-grid">
+        <article class="links-site-card">
+          <header class="links-site-card-head">
+            <div class="links-site-avatar<%= applyAvatar ? '' : ' is-fallback' %>">
+              <% if (applyAvatar) { %>
+              <img src="<%= applyAvatar %>" alt="<%= applyName %>" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('is-fallback');" />
+              <% } %>
+              <span class="links-site-avatar-fallback"><%= (applyName || '站').charAt(0) %></span>
+            </div>
+            <div class="links-site-meta">
+              <h3 class="links-site-name"><%= applyName || '本站' %></h3>
+              <% if (applyDesc) { %><p class="links-site-tagline"><%= applyDesc %></p><% } %>
+            </div>
+          </header>
+          <div class="links-site-fields">
+            <% siteFields.forEach(function(field) { %>
+            <div class="links-site-field">
+              <div class="links-site-field-text">
+                <span class="links-site-field-label"><%= field.label %></span>
+                <span class="links-site-field-value" title="<%= field.value %>"><%= field.value %></span>
+              </div>
+              <button
+                type="button"
+                class="links-copy-btn"
+                data-copy="<%= field.value %>"
+                aria-label="复制<%= field.label %>"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <span data-copy-label>复制</span>
+              </button>
+            </div>
+            <% }); %>
+          </div>
+        </article>
+
+        <article class="links-apply-card">
+          <header class="links-apply-card-head">
+            <span class="links-apply-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <path d="M9 15l2 2 4-4" />
+              </svg>
+            </span>
+            <h3>申请友链</h3>
+          </header>
+          <ol class="links-apply-steps">
+            <% applySteps.forEach(function(step, idx) { %>
+            <li class="links-apply-step">
+              <span class="links-apply-step-num"><%= idx + 1 %></span>
+              <div class="links-apply-step-body">
+                <strong><%= step.title || ('步骤 ' + (idx + 1)) %></strong>
+                <% if (step.desc) { %><p><%= step.desc %></p><% } %>
+              </div>
+            </li>
+            <% }); %>
+          </ol>
+        </article>
       </div>
+
+      <% if (showNotice || showDisclaimer) { %>
+      <div class="links-accordions">
+        <% if (showNotice) { %>
+        <details class="links-accordion"<%= notice.open !== false ? ' open' : '' %>>
+          <summary>
+            <span><%= notice.title || '友链须知' %></span>
+            <svg class="links-accordion-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </summary>
+          <div class="links-accordion-body">
+            <ul>
+              <% notice.items.forEach(function(item) { %>
+              <li><%= item %></li>
+              <% }); %>
+            </ul>
+          </div>
+        </details>
+        <% } %>
+        <% if (showDisclaimer) { %>
+        <details class="links-accordion"<%= disclaimer.open ? ' open' : '' %>>
+          <summary>
+            <span><%= disclaimer.title || '免责声明' %></span>
+            <svg class="links-accordion-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </summary>
+          <div class="links-accordion-body">
+            <ul>
+              <% disclaimer.items.forEach(function(item) { %>
+              <li><%= item %></li>
+              <% }); %>
+            </ul>
+          </div>
+        </details>
+        <% } %>
+      </div>
+      <% } %>
     </section>
+    <% } %>
 
     <%- partial('_partial/comment') %>
   </div>

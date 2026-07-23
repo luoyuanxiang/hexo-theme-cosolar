@@ -80,6 +80,19 @@ menu:
     url: /about/
     icon: icon-blog
 
+# 友链申请面板可在主题 _config.yml 的 links.apply 中配置
+# 常用覆盖示例：
+# links:
+#   apply:
+#     site_name: 墨韵云阁
+#     site_description: 记录技术成长，分享解决方案
+#     notice:
+#       open: true
+#       items:
+#         - 申请前请先添加本站友链
+#     disclaimer:
+#       open: false
+
 search:
   enable: true
   path: search.json

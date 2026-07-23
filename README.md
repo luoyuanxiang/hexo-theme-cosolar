@@ -204,6 +204,8 @@ links:
     group: friends
 ```
 
+3. 申请友链面板（本站信息 / 步骤 / 须知 / 免责声明）在 `_config.cosolar.yml` 的 `links.apply` 配置；留空字段会回退到站点标题、标语、Logo、`/atom.xml` 等默认值。
+
 ### 分类 / 标签总览
 
 主题 generator 自动生成 `/categories/`、`/tags/` 总览页，无需额外 md。
