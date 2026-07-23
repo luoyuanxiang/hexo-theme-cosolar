@@ -19,7 +19,7 @@
 >
   <a class="article-thumb" href="<%- url_for(post.path) %>">
     <% if (postCover) { %>
-    <img src="<%= postCover %>" alt="" loading="lazy" />
+    <img src="<%= postCover %>" alt="" loading="lazy" decoding="async" />
     <% } else { %>
     <span class="article-thumb-placeholder">&lt;/&gt;</span>
     <% } %>

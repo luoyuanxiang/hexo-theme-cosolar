@@ -1,6 +1,6 @@
 {
   "name": "hexo-theme-cosolar",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "清风徐来，码迹自留 — Cosolar Hexo theme (ported from Halo)",
   "main": "package.json",
   "keywords": ["hexo", "theme", "cosolar"],

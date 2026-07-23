@@ -38,7 +38,7 @@
   >
     <div class="author-profile">
       <div class="author-avatar">
-        <img src="<%= authorAvatar %>" alt="<%= authorName %>" />
+        <img src="<%= authorAvatar %>" alt="<%= authorName %>" loading="lazy" decoding="async" />
       </div>
       <h3 class="author-name"><%= authorName %></h3>
       <% if (authorBio) { %><p class="author-bio"><%= authorBio %></p><% } %>
@@ -138,7 +138,7 @@
       </span>
     </div>
     <div class="wechat-qr-body">
-      <img class="wechat-qr-img" src="<%= sb.wechat_qr_image %>" alt="公众号二维码" />
+      <img class="wechat-qr-img" src="<%= sb.wechat_qr_image %>" alt="公众号二维码" loading="lazy" decoding="async" />
       <p class="wechat-qr-text"><%= sb.wechat_qr_title || '扫码关注' %></p>
     </div>
   </div>

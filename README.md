@@ -124,6 +124,7 @@ Hexo 扩展：
 - `search` — 本地搜索
 - `comment` — `twikoo` / `waline` / `none`
 - `feed` — 内置 `/atom.xml`（已装 `hexo-generator-feed` 时自动让位）
+- `lazyload` — 正文与列表图片原生懒加载（`loading="lazy"`）
 - `busuanzi` — 访问量
 - `visit` — 文章阅读量（首页卡片回填）
 - `upvote` — `local` / `leancloud`

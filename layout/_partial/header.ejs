@@ -16,6 +16,9 @@
         width="<%= basic.logo_image_width || 36 %>"
         height="<%= basic.logo_image_height || 36 %>"
         alt="<%= basic.logo_text || config.title || 'Logo' %>"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
       />
       <span class="logo-text">
         <span class="logo-name"><%= basic.logo_text || config.title %></span>
