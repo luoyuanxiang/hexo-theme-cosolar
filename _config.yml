@@ -453,14 +453,31 @@ links:
     # RSS 地址，留空则使用 /atom.xml（或 social.rss）
     site_rss: ""
 
+    # ------------------------------------------------------------
+    # 自助申请按钮（GitHub Issue / PR）
+    # 配置 issue_url 后显示「自助申请友链」按钮；pr_enable + pr_url 显示次要「提交 PR」
+    # ------------------------------------------------------------
+    # 是否显示自助申请按钮（还需配置 issue_url）
+    button_enable: true
+    # 按钮文案
+    button_text: "自助申请友链"
+    # GitHub Issue 申请表地址，例如：
+    # https://github.com/owner/repo/issues/new?template=friend-link.yml
+    issue_url: ""
+    # 是否显示「提交 PR」次要按钮
+    pr_enable: false
+    pr_button_text: "提交 PR"
+    # 手动提交 PR 的地址（通常指向 links.yml 编辑页或新建 PR）
+    pr_url: ""
+
     # 申请步骤（右侧）
     steps:
       - title: 添加本站友链
         desc: 请先复制左侧本站信息，并添加到贵站的友情链接中
-      - title: 评论留言
-        desc: 在本页下方评论区留言申请，提供贵站名称、简介、链接与头像
-      - title: 等待审核
-        desc: 审核通过后会添加友链，请耐心等待
+      - title: 填写申请表
+        desc: 点击下方「自助申请友链」提交 GitHub Issue（也可在评论区留言）
+      - title: 自动校验与人工审核
+        desc: 机器人校验回链后由维护者审核，通过后自动写入友链列表
 
     # 友链须知（可折叠，支持多条）
     notice:

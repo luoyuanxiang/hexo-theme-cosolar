@@ -86,6 +86,11 @@ menu:
 #   apply:
 #     site_name: 墨韵云阁
 #     site_description: 记录技术成长，分享解决方案
+#     button_enable: true
+#     button_text: 自助申请友链
+#     issue_url: https://github.com/owner/repo/issues/new?template=friend-link.yml
+#     pr_enable: false
+#     pr_url: ""
 #     notice:
 #       open: true
 #       items:
