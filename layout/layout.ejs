@@ -102,5 +102,21 @@
   </script>
   <script src="<%- url_for('/js/visit.js') %>" defer></script>
   <% } %>
+  <% if (theme.comment && theme.comment.provider && theme.comment.provider !== 'none') { %>
+  <script>
+    window.COSOLAR_STATS = {
+      provider: '<%= theme.comment.provider %>',
+      twikoo: {
+        envId: '<%= (theme.comment.twikoo && theme.comment.twikoo.envId) || '' %>',
+        region: '<%= (theme.comment.twikoo && theme.comment.twikoo.region) || '' %>'
+      },
+      waline: {
+        serverURL: '<%= (theme.comment.waline && theme.comment.waline.serverURL) || '' %>'
+      },
+      paths: <%- JSON.stringify((site.posts || []).map(function(p){ return '/' + String(p.path || '').replace(/^\//, ''); }).concat((site.pages || []).map(function(p){ return '/' + String(p.path || '').replace(/^\//, ''); }))) %>
+    };
+  </script>
+  <script src="<%- url_for('/js/stats.js') %>" defer></script>
+  <% } %>
 </body>
 </html>
