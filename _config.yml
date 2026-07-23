@@ -607,6 +607,10 @@ comment:
     envId: ""
     # 环境地域（腾讯云环境可选，如 ap-shanghai；自建可留空）
     region: ""
+    # 前端 SDK 版本（jsDelivr CDN）
+    version: "1.7.14"
+    # 可选：自定义 CDN 完整地址（填写后忽略 version）
+    # cdn: https://cdn.jsdelivr.net/npm/twikoo@1.7.14/dist/twikoo.min.js
 
   # Waline 配置（provider 为 waline 时生效）
   waline:

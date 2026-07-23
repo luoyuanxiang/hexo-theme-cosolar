@@ -108,7 +108,9 @@
       provider: '<%= theme.comment.provider %>',
       twikoo: {
         envId: '<%= (theme.comment.twikoo && theme.comment.twikoo.envId) || '' %>',
-        region: '<%= (theme.comment.twikoo && theme.comment.twikoo.region) || '' %>'
+        region: '<%= (theme.comment.twikoo && theme.comment.twikoo.region) || '' %>',
+        version: '<%= (theme.comment.twikoo && theme.comment.twikoo.version) || '1.7.14' %>',
+        cdn: '<%= (theme.comment.twikoo && theme.comment.twikoo.cdn) || '' %>'
       },
       waline: {
         serverURL: '<%= (theme.comment.waline && theme.comment.waline.serverURL) || '' %>'

@@ -75,7 +75,10 @@
     if (!tw.envId) return Promise.resolve(null);
 
     return loadScript(
-      "https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js"
+      tw.cdn ||
+        "https://cdn.jsdelivr.net/npm/twikoo@" +
+          (tw.version || "1.7.14") +
+          "/dist/twikoo.min.js"
     ).then(function () {
       var urls = uniquePaths(cfg.paths || []);
       if (!urls.length) return { total: 0, map: {} };
