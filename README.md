@@ -202,8 +202,6 @@ links:
     logo: ""
     description: 简介
     group: friends
-    status: online   # online | offline | checking
-    backlink: true   # true/false 或 FOUND/MISSING
 ```
 
 ### 分类 / 标签总览

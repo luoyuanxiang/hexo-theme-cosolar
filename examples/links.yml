@@ -13,21 +13,15 @@ links:
     logo: https://halo.run/logo.png
     description: 强大易用的开源建站工具
     group: tech
-    status: online # online | offline | checking
-    backlink: true # true/false 或 FOUND/MISSING
 
   - name: Hexo
     url: https://hexo.io
     logo: ""
     description: 快速、简洁且高效的博客框架
     group: tech
-    status: online
-    backlink: false
 
   - name: 示例好友
     url: https://example.com
     logo: ""
     description: 互相学习，共同进步
     group: friends
-    status: checking
-    backlink: MISSING

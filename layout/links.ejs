@@ -125,8 +125,6 @@
                  var displayName = link.name || link.display_name || 'Link';
                  var logo = link.logo || '';
                  var desc = link.description || '';
-                 var status = (link.status || 'online').toLowerCase();
-                 var backlink = link.backlink;
             %>
             <a
               href="<%= link.url %>"
@@ -158,20 +156,6 @@
               <% if (desc) { %><p class="link-card-desc"><%= desc %></p><% } %>
               <div class="link-card-footer">
                 <span class="link-tag"><%= grp.display_name %></span>
-                <div class="link-card-badges">
-                  <% if (status === 'online') { %>
-                  <span class="link-badge link-badge--ok" title="链接可访问"><span class="dot"></span>在线</span>
-                  <% } else if (status === 'offline') { %>
-                  <span class="link-badge link-badge--off" title="链接不可访问"><span class="dot"></span>离线</span>
-                  <% } else if (status === 'checking') { %>
-                  <span class="link-badge link-badge--check" title="正在检测"><span class="dot"></span>检测中</span>
-                  <% } %>
-                  <% if (backlink === true || backlink === 'FOUND') { %>
-                  <span class="link-badge link-badge--back" title="已回链"><span class="dot"></span>已回链</span>
-                  <% } else if (backlink === false || backlink === 'MISSING') { %>
-                  <span class="link-badge link-badge--back link-badge--back-miss" title="未回链"><span class="dot"></span>未回链</span>
-                  <% } %>
-                </div>
               </div>
             </a>
             <% }); %>
