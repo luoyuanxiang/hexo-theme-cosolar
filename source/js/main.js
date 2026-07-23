@@ -34,11 +34,20 @@
   // ===== Mobile Menu Toggle =====
   var menuToggle = document.getElementById("menuToggle");
   var headerNav = document.getElementById("headerNav");
+  var siteHeader = document.querySelector(".site-header");
+
+  function setMobileMenuOpen(open) {
+    if (menuToggle) menuToggle.classList.toggle("active", open);
+    if (headerNav) headerNav.classList.toggle("open", open);
+    if (siteHeader) siteHeader.classList.toggle("is-menu-open", open);
+    document.body.classList.toggle("menu-open", open);
+    if (menuToggle) menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
 
   if (menuToggle) {
     menuToggle.addEventListener("click", function () {
-      menuToggle.classList.toggle("active");
-      if (headerNav) headerNav.classList.toggle("open");
+      var willOpen = !(headerNav && headerNav.classList.contains("open"));
+      setMobileMenuOpen(willOpen);
     });
   }
 
@@ -69,8 +78,7 @@
 
       // Close mobile drawer when following a real link
       if (isMobile) {
-        if (menuToggle) menuToggle.classList.remove("active");
-        headerNav.classList.remove("open");
+        setMobileMenuOpen(false);
       }
     });
 
@@ -97,8 +105,6 @@
   });
 
   // ===== Header Scroll Shadow =====
-  var siteHeader = document.querySelector(".site-header");
-
   window.addEventListener("scroll", function () {
     if (!siteHeader) return;
     if (window.scrollY > 10) {

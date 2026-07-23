@@ -253,7 +253,7 @@ textarea {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background: color-mix(in srgb, var(--color-card) 85%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -262,6 +262,10 @@ textarea {
     background-color var(--transition),
     border-color var(--transition),
     box-shadow var(--transition);
+}
+
+.site-header.is-menu-open {
+  z-index: 2000;
 }
 
 .site-header.scrolled {
@@ -5713,17 +5717,18 @@ textarea {
   }
 
   .header-nav {
-    display: none;
+    display: flex;
     position: fixed;
     top: var(--header-height);
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 2001;
     flex-direction: column;
     align-items: stretch;
     padding: 14px 14px calc(20px + env(safe-area-inset-bottom));
-    /* 毛玻璃透明背景 */
-    background: color-mix(in srgb, var(--color-bg) 95%, transparent);
+    /* 不透明底，避免首页精选卡透出/盖住菜单 */
+    background: var(--color-bg);
     backdrop-filter: blur(24px) saturate(1.8);
     -webkit-backdrop-filter: blur(24px) saturate(1.8);
     border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
@@ -5731,18 +5736,29 @@ textarea {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     pointer-events: none;
+    visibility: hidden;
     transform: translateY(-16px);
     opacity: 0;
     transition:
       transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.28s ease;
+      opacity 0.28s ease,
+      visibility 0s linear 0.32s;
   }
 
   .header-nav.open {
-    display: flex;
     pointer-events: auto;
+    visibility: visible;
     transform: translateY(0);
     opacity: 1;
+    transition:
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.28s ease,
+      visibility 0s linear 0s;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+    touch-action: none;
   }
 
   /* 菜单项：圆角、轻背景、错峰入场动画 */
