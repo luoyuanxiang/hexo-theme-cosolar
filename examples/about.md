@@ -8,7 +8,7 @@ date: 2026-07-22
 
 ## 写在前面
 
-本页记录 **hexo-theme-cosolar** 的诞生过程：如何把运行在 [Halo](https://halo.run) 上的 [Cosolar](https://github.com/cosolar/halo-theme-cosolar) 主题，像素级移植为可 `npm` 安装的 Hexo 主题，并对照线上参考站 [blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/) 完成主要页面与交互。
+本页记录 **hexo-theme-cosolar** 的诞生过程：如何把运行在 [Halo](https://halo.run) 上的 [Cosolar](https://github.com/cosolar/halo-theme-cosolar) 主题，像素级移植为可 `npm` 安装的 Hexo 主题，并对照线上参考站完成主要页面与交互。
 
 主题口号不变：**清风徐来，码迹自留**。
 
@@ -58,9 +58,13 @@ date: 2026-07-22
 
 - 需从零搭建：`package.json`、`_config.yml`、`layout/`、`source/`、`scripts/`、`README.md`
 
-### 对照站
+### 对照站 / 设计参考
 
-- [https://blog.luoyuanxiang.top/](https://blog.luoyuanxiang.top/)（墨韵云阁 · Cosolar 观感）
+| 站点 | 作用 |
+|------|------|
+| [墨韵云阁 · blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/) | Cosolar 整体观感与主流程对照 |
+| [楠枝小笺](https://www.nannax.top/) | 友链页底部申请面板 / 卡片布局灵感 |
+| [灵的梦境](https://lemonadorable.github.io/) | 自助友链申请（Issue）与「提交 PR」入口设计灵感 |
 
 ---
 
@@ -149,6 +153,11 @@ date: 2026-07-22
 - （不可放在主题 `source/`：会被当成静态资源，不解析 front-matter、不套布局）
 - 博客侧若自备 `source/about/`，则优先使用站点页面覆盖
 
+### 6. 友链申请体验增强
+
+- 参考 [楠枝小笺](https://www.nannax.top/)：友链页底部「本站信息 + 申请步骤 + 须知」卡片式面板
+- 参考 [灵的梦境](https://lemonadorable.github.io/)：自助申请友链（GitHub Issue 表单）与「提交 PR」次要入口；配合仓库 Issue 模板 + Actions 自动校验/写入
+
 ---
 
 ## 六、能力对照（Halo → Hexo）
@@ -202,10 +211,13 @@ theme: cosolar
 ## 九、致谢
 
 - 本仓库：[luoyuanxiang/hexo-theme-cosolar](https://github.com/luoyuanxiang/hexo-theme-cosolar)
-- 上游主题：**Cosolar**（Halo）作者与社区  
-- 设计参照站：[blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/)  
+- 上游主题：**Cosolar**（Halo）作者与社区
+- 设计参照站：
+  - [blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/)（整体观感）
+  - [楠枝小笺](https://www.nannax.top/)（友链底部卡片）
+  - [灵的梦境](https://lemonadorable.github.io/)（自助友链 / PR 提交）
 - 静态博客框架：[Hexo](https://hexo.io)
 
 ---
 
-*本页随主题版本演进可持续增补。记录日期：2026-07-22。*
+*本页随主题版本演进可持续增补。记录日期：2026-07-24。*

@@ -5,6 +5,7 @@
 - 仓库：[github.com/luoyuanxiang/hexo-theme-cosolar](https://github.com/luoyuanxiang/hexo-theme-cosolar)
 - 在线 Demo：[luoyuanxiang.top](https://luoyuanxiang.top)
 - 视觉参考：[blog.luoyuanxiang.top](https://blog.luoyuanxiang.top/)
+- 友链体验参考：[楠枝小笺](https://www.nannax.top/)（底部申请卡片）、[灵的梦境](https://lemonadorable.github.io/)（自助 Issue / PR）
 
 ## 功能清单
 
