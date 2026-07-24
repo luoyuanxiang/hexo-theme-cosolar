@@ -9,12 +9,11 @@
   if (!articleContent) return;
 
   var headings = articleContent.querySelectorAll("h2, h3, h4");
+  var headingList = [];
+
   if (headings.length === 0) {
     tocNav.innerHTML = '<div class="toc-empty">本文无目录</div>';
-    return;
-  }
-
-  var headingList = [];
+  } else {
   headings.forEach(function (heading, index) {
     if (!heading.id) {
       heading.id =
@@ -149,6 +148,7 @@
     info.el.setAttribute("data-toc-idx", String(idx));
     observer.observe(info.el);
   });
+  } // end else: has headings
 
   // ===== Upvote — CosolarUpvote hook or localStorage by pathname =====
   var upvoteBtn = document.getElementById("upvoteBtn");

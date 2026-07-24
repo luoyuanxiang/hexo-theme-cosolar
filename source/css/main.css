@@ -676,19 +676,37 @@ textarea {
    ============================================ */
 .post-layout {
   display: grid;
-  grid-template-columns: 56px 1fr var(--toc-width);
+  grid-template-columns: 1fr var(--toc-width);
   gap: var(--content-gap);
   align-items: start;
 }
 
-/* Floating Action Bar */
-.post-actions {
-  position: sticky;
-  bottom: 40px;
-  align-self: end;
+/* Floating Action Bar (legacy class kept for mobile selectors) */
+.post-actions,
+.float-actions {
+  position: fixed;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  z-index: 90;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
+}
+
+.float-actions--right {
+  right: 24px;
+  left: auto;
+}
+
+.float-actions--left {
+  left: 24px;
+  right: auto;
+}
+
+.float-actions .action-share-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -766,7 +784,6 @@ textarea {
 /* Share menu */
 .action-share-menu {
   position: absolute;
-  left: 60px;
   top: 0;
   display: flex;
   flex-direction: column;
@@ -778,9 +795,21 @@ textarea {
   box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-8px);
   transition: all var(--transition);
   z-index: 20;
+}
+
+.float-actions--left .action-share-menu,
+.post-actions .action-share-menu {
+  left: 60px;
+  right: auto;
+  transform: translateX(-8px);
+}
+
+.float-actions--right .action-share-menu {
+  right: 60px;
+  left: auto;
+  transform: translateX(8px);
 }
 
 .action-share-menu.show {
@@ -816,91 +845,50 @@ textarea {
   background: var(--color-primary-bg);
 }
 
-/* Back to top (legacy post-actions, kept for safety) */
-.action-backtop {
+/* Back to top inside float-actions */
+.float-actions .action-backtop {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: all var(--transition);
 }
 
-.action-backtop.show {
+.float-actions .action-backtop.is-visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
-/* ===== Global Back to Top ===== */
-.back-to-top {
-  position: fixed;
-  bottom: calc(28px + env(safe-area-inset-bottom));
-  z-index: 90;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border-radius: var(--radius-full);
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(8px);
-  transition:
-    opacity var(--transition),
-    visibility var(--transition),
-    transform var(--transition),
-    color var(--transition),
-    background var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
-
-.back-to-top--right {
-  right: 24px;
-  left: auto;
-}
-
-.back-to-top--left {
-  left: 24px;
-  right: auto;
-}
-
-.back-to-top.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.back-to-top svg {
-  width: 20px;
-  height: 20px;
-  transition: transform var(--transition);
-}
-
-.back-to-top:hover {
-  border-color: var(--color-primary);
+.float-actions .action-backtop .backtop-percent {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  line-height: 1;
   color: var(--color-primary);
-  background: var(--color-primary-bg);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 20%, transparent);
+  min-width: 28px;
+  text-align: center;
 }
 
-.back-to-top:hover svg {
-  transform: translateY(-2px);
+/* 桌面端阅读进度：贴在顶栏下方 */
+.float-actions--post .reading-progress {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-primary-light) 50%,
+    #f59e0b 100%
+  );
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-primary) 45%, transparent);
+  transition: width 0.1s linear;
+  z-index: 80;
+  pointer-events: none;
 }
 
-.back-to-top:active {
-  transform: translateY(0);
-}
-
-.back-to-top:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* 目录按钮：仅移动端底部横条显示，桌面端隐藏（桌面用左侧 TOC 侧栏） */
+/* 目录按钮：仅移动端底部横条显示，桌面端隐藏（桌面用右侧 TOC 侧栏） */
 .action-toc {
   display: none;
 }
@@ -5823,7 +5811,7 @@ textarea {
     margin-bottom: 0;
   }
 
-  body:has(.post-actions) {
+  body:has(.float-actions--post) {
     padding-bottom: calc(64px + env(safe-area-inset-bottom));
   }
 
@@ -5882,13 +5870,13 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  /* 桌面端左侧浮动操作栏：移动端转为贴底毛玻璃横条 */
-  .post-actions {
+  /* 文章页浮动操作栏：移动端转为贴底毛玻璃横条 */
+  .float-actions--post {
     position: fixed;
     top: auto;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 0 !important;
+    right: 0 !important;
     transform: none;
     flex-direction: row;
     gap: 0;
@@ -5903,6 +5891,21 @@ textarea {
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
     z-index: 100;
     max-width: none;
+  }
+
+  /* 非文章页：回顶仍为角落悬浮按钮 */
+  .float-actions:not(.float-actions--post) {
+    bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .float-actions:not(.float-actions--post).float-actions--right {
+    right: 16px;
+    left: auto;
+  }
+
+  .float-actions:not(.float-actions--post).float-actions--left {
+    left: 16px;
+    right: auto;
   }
 
   /* 阅读进度条：贴在横条最上方，彩色渐变细条 */
@@ -5925,7 +5928,7 @@ textarea {
   }
 
   /* 目录按钮百分比文字 */
-  .post-actions .action-toc .toc-percent {
+  .float-actions--post .action-toc .toc-percent {
     font-size: 11px;
     font-weight: 600;
     font-family: var(--font-mono);
@@ -5935,7 +5938,7 @@ textarea {
   }
 
   /* 按钮平分宽度，去除独立卡片感 */
-  .post-actions .action-btn {
+  .float-actions--post .action-btn {
     flex: 1;
     width: auto;
     height: 44px;
@@ -5948,17 +5951,17 @@ textarea {
     color: var(--color-text-secondary);
   }
 
-  .post-actions .action-btn svg {
+  .float-actions--post .action-btn svg {
     width: 19px;
     height: 19px;
   }
 
-  .post-actions .action-btn .action-count {
+  .float-actions--post .action-btn .action-count {
     font-size: 12px;
   }
 
-  .post-actions .action-btn:hover,
-  .post-actions .action-btn:active {
+  .float-actions--post .action-btn:hover,
+  .float-actions--post .action-btn:active {
     transform: none;
     background: color-mix(in srgb, var(--color-primary-bg) 70%, transparent);
     color: var(--color-primary);
@@ -5966,13 +5969,24 @@ textarea {
   }
 
   /* 点赞激活态：主色实心 */
-  .post-actions .action-upvote.liked {
+  .float-actions--post .action-upvote.liked {
     color: var(--color-primary);
     background: color-mix(in srgb, var(--color-primary-bg) 80%, transparent);
   }
 
+  .float-actions--post .action-share-wrap {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .float-actions--post .action-share-wrap .action-share {
+    flex: 1;
+    width: 100%;
+  }
+
   /* 分享菜单：从底部向上展开，居中浮动卡片 */
-  .post-actions .action-share-menu {
+  .float-actions--post .action-share-menu {
     left: 50%;
     right: auto;
     bottom: calc(64px + env(safe-area-inset-bottom));
@@ -5984,11 +5998,11 @@ textarea {
     border-radius: var(--radius-lg);
   }
 
-  .post-actions .action-share-menu.show {
+  .float-actions--post .action-share-menu.show {
     transform: translateX(-50%) translateY(0);
   }
 
-  .post-actions .share-item {
+  .float-actions--post .share-item {
     flex-direction: column;
     gap: 4px;
     padding: 8px 14px;
@@ -5996,44 +6010,30 @@ textarea {
     border-radius: var(--radius-md);
   }
 
-  .post-actions .share-item svg {
+  .float-actions--post .share-item svg {
     width: 20px;
     height: 20px;
   }
 
-  /* 回顶按钮并入横条，默认可见（不受桌面端 .show 滚动控制） */
-  .post-actions .action-backtop {
+  /* 回顶按钮并入横条；滚动不足阈值时半透明不可点 */
+  .float-actions--post .action-backtop {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
   }
 
-  /* 回顶按钮禁用态：已在顶部时不可点击 */
-  .post-actions .action-backtop.disabled {
+  .float-actions--post .action-backtop:not(.is-visible) {
     opacity: 0.4;
     cursor: not-allowed;
     pointer-events: none;
   }
 
-  /* 文章页底部横条存在时，全局回顶上移避免遮挡 */
-  body:has(.post-actions) .back-to-top {
-    bottom: calc(72px + env(safe-area-inset-bottom));
-  }
-
-  .back-to-top {
-    width: 44px;
-    height: 44px;
-  }
-
-  .back-to-top--right {
-    right: 16px;
-  }
-
-  .back-to-top--left {
-    left: 16px;
+  .float-actions--post .action-backtop[hidden] {
+    display: inline-flex !important;
   }
 
   /* 目录按钮：移动端横条里显示 */
-  .post-actions .action-toc {
+  .float-actions--post .action-toc {
     display: flex;
   }
 
