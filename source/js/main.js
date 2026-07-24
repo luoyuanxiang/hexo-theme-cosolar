@@ -510,4 +510,40 @@
       showTip();
     });
   })();
+
+  // ===== Back to Top (global) =====
+  (function initBackToTop() {
+    var btn = document.getElementById("backToTop");
+    if (!btn) return;
+
+    function resolveThreshold() {
+      var raw = (btn.getAttribute("data-show-height") || "400").trim();
+      if (/%$/.test(raw)) {
+        var pct = parseFloat(raw);
+        if (!isFinite(pct) || pct < 0) pct = 20;
+        return Math.max(0, (pct / 100) * Math.max(0, document.documentElement.scrollHeight - window.innerHeight));
+      }
+      var px = parseFloat(raw);
+      return isFinite(px) && px >= 0 ? px : 400;
+    }
+
+    function updateVisibility() {
+      var threshold = resolveThreshold();
+      if (window.scrollY > threshold) {
+        btn.hidden = false;
+        btn.classList.add("is-visible");
+      } else {
+        btn.classList.remove("is-visible");
+        btn.hidden = true;
+      }
+    }
+
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility, { passive: true });
+  })();
 })();

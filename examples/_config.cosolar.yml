@@ -121,6 +121,12 @@ comment:
 busuanzi:
   enable: true
 
+# 回到顶部（全局）
+# back_to_top:
+#   enable: true
+#   position: right   # left | right
+#   show_height: 400  # 像素，或 "20%"
+
 # 文章阅读量：打开文章后会计数，并回填到首页卡片
 visit:
   enable: true

@@ -292,27 +292,7 @@
   }
 
   // ===== Back to Top Button =====
-  var backtopBtn = document.getElementById("backtopBtn");
-  if (backtopBtn) {
-    var btn = backtopBtn;
-    function updateBacktopState() {
-      if (window.scrollY > 400) {
-        btn.classList.add("show");
-        btn.classList.remove("disabled");
-        btn.removeAttribute("aria-disabled");
-      } else {
-        btn.classList.add("show", "disabled");
-        btn.setAttribute("aria-disabled", "true");
-      }
-    }
-    updateBacktopState();
-    window.addEventListener("scroll", updateBacktopState, { passive: true });
-
-    btn.addEventListener("click", function () {
-      if (btn.classList.contains("disabled")) return;
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
+  // moved to global back-to-top in main.js
 
   // ===== Word count & reading time =====
   function fillReadingStats() {
