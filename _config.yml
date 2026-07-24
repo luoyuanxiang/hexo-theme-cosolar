@@ -608,35 +608,40 @@ background_dark:
 # 导航菜单（Hexo 扩展：menu）
 # 对应 Halo 菜单 + 菜单项 icon 注解；icon 为 iconfont 类名（可不含前缀冲突时写全类名）
 # 支持多级：用 children（或 submenu）嵌套；可无限层级（桌面为下拉/飞出，移动端为手风琴）
-# 父级可无 url（写 # 或不写），仅作分组；也可同时配置 url 可点击跳转
+# 父级仅作分组时请显式写 url: '#'（不要省略），否则 Hexo deepMerge 可能把主题
+# 默认菜单同下标项的 url 合并进来，导致多个菜单同时高亮。
+#
+# 注意：主题默认 menu 必须为空数组。Hexo 会按数组下标 deepMerge 主题与站点配置，
+# 若此处写满默认项，站点在中间插入菜单时极易「串」到错误的 url/icon。
+# 请在博客 _config.cosolar.yml 中完整配置 menu（示例见下注释 / README）。
 # ============================================================
-menu:
-  # 菜单项：name 显示名 / url 链接 / icon 图标类名 / children 子菜单 / target 可选
-  - name: 首页
-    url: /
-    icon: icon-shouye
-  - name: 分类
-    url: /categories/
-    icon: icon-fengfuduoyuan
-    # children:
-    #   - name: Java
-    #     url: /categories/Java/
-    #   - name: 更多
-    #     children:
-    #       - name: 专题页
-    #         url: /about/
-  - name: 标签
-    url: /tags/
-    icon: icon-bokexinwen
-  - name: 归档
-    url: /archives/
-    icon: icon-jishufuwu
-  - name: 友链
-    url: /links/
-    icon: icon-kaiyuan
-  - name: 关于
-    url: /about/
-    icon: icon-blog
+menu: []
+  # 示例（复制到站点 _config.cosolar.yml）：
+  # - name: 首页
+  #   url: /
+  #   icon: icon-shouye
+  # - name: 分类
+  #   url: /categories/
+  #   icon: icon-fengfuduoyuan
+  # - name: 标签
+  #   url: /tags/
+  #   icon: icon-bokexinwen
+  # - name: 归档
+  #   url: /archives/
+  #   icon: icon-jishufuwu
+  # - name: 友链
+  #   url: /links/
+  #   icon: icon-kaiyuan
+  # - name: 文档
+  #   url: '#'          # 仅分组、无独立页面时必须写 #
+  #   icon: icon-blog
+  #   children:
+  #     - name: Hexo
+  #       url: https://hexo.io
+  #       target: _blank
+  # - name: 关于
+  #   url: /about/
+  #   icon: icon-bokeyuan
 
 # ============================================================
 # 本地搜索（Hexo 扩展：search）

@@ -158,7 +158,9 @@ menu:
           - name: 关于
             url: /about/
   - name: 文档
-    # 无 url 时仅作分组（移动端点标题展开）
+    # 仅分组时请显式写 url: '#'（勿省略）。
+    # Hexo 会按数组合并主题/站点配置，省略 url 可能误继承同下标项的链接。
+    url: '#'
     children:
       - name: Hexo
         url: https://hexo.io
@@ -166,6 +168,8 @@ menu:
 ```
 
 桌面端：悬停下拉，三级及以上向右飞出。移动端：手风琴展开；点箭头可只展开不跳转。
+
+> **提示**：主题默认 `menu: []`，请在站点 `_config.cosolar.yml` 完整配置导航。父级分组菜单务必写 `url: '#'`。
 
 附件类字段在 Halo 为上传组件，Hexo 请填 **图片 URL 字符串**。精选文章 `featured.featured_posts` 填文章 **path / slug / 标题** 列表。
 

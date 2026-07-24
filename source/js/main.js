@@ -154,19 +154,30 @@
   });
 
   // ===== Active Nav State =====
+  // Server already marks active via menu_is_active; this is a client fallback.
+  // Skip # / empty / external links — empty path would match every page via startsWith("").
   var navLinks = headerNav ? headerNav.querySelectorAll("a") : null;
-  var currentPath = window.location.pathname;
+  var currentPath =
+    window.location.pathname.replace(/index\.html$/i, "").replace(/\/$/, "") || "/";
+
+  function normalizeNavPath(href) {
+    if (!href || href === "#" || /^(javascript:|mailto:|tel:)/i.test(href)) return null;
+    if (/^(https?:)?\/\//i.test(href) || /^(https?:)/i.test(href)) return null;
+    var path = href.split("?")[0].split("#")[0];
+    path = path.replace(/index\.html$/i, "").replace(/\/$/, "") || "/";
+    return path;
+  }
 
   if (navLinks) {
     navLinks.forEach(function (link) {
-      var href = link.getAttribute("href") || "";
-      var linkPath = href.replace(/^(https?:\/\/[^/]+)?/, "");
+      var linkPath = normalizeNavPath(link.getAttribute("href") || "");
+      if (!linkPath) return;
 
-      if (linkPath === currentPath || (linkPath !== "/" && currentPath.startsWith(linkPath))) {
-        link.classList.add("active");
-      } else if (linkPath === "/" && currentPath === "/") {
-        link.classList.add("active");
-      }
+      var matched =
+        linkPath === currentPath ||
+        (linkPath !== "/" && currentPath.startsWith(linkPath + "/"));
+
+      if (matched) link.classList.add("active");
     });
   }
 
